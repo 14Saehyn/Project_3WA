@@ -1,37 +1,59 @@
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
+import {useEffect} from 'react'
+import axios from 'axios'
 
 const Nav = (props) => {
+  
+   useEffect(() => {
+    if(!axios.defaults.headers.common['Authorization']){
+      const token = localStorage.getItem("jwtToken")
+      if(token){
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+token
+      }
+    }
+  },[])
+  
   return (
     <nav>
       <ul>
         <li>
           <NavLink to="/">
-            HOME
+            Home
           </NavLink>
         </li>
         <li>
-          <NavLink to="/contact">
-            contact
+          <NavLink to="/login">
+            S'identifier
           </NavLink>
         </li>
         <li>
-          <NavLink to="/profil">
-            profil
+          <NavLink to="/addUser">
+            Ajouter un utilisateur
           </NavLink>
         </li>
         <li>
-          <NavLink to="/product/react">
-            profil
+          <NavLink to="/addArticle">
+            Ajouter un article
           </NavLink>
         </li>
         <li>
-          <NavLink to="/product/html">
-            profil
+          <NavLink to="/addComment">
+            Ajouter un commentaire
           </NavLink>
         </li>
         <li>
-          <NavLink to="/testme">
-            profil
+          <NavLink to="/users">
+            Tous les utilisateurs
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/articles">
+            Tous les articles
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/commentaires">
+            Tous les commentaires
           </NavLink>
         </li>
       </ul>

@@ -1,0 +1,1 @@
+export const BASE_URL = 'http://theofacorat.ide.3wa.io:3001'
