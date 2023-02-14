@@ -1,16 +1,18 @@
 import formidable from 'formidable';
 import fs from 'fs';
 import path from 'path';
+import {asyncQuery} from "../config/database.js"
 
 const allowedExtensions = ['jpeg', 'jpg', 'png', 'gif'];
 const imageDirectory = 'public/img';
 const MAX_FIELD_SIZE = 20 * 1024 * 1024;
+const sql = "UPDATE users SET pictures = ? WHERE id = ?"
 
 const form = formidable({
   multiples: false,
   keepExtensions: true,
   encoding: 'utf-8',
-  maxFieldsSize: MAX_FIELD_SIZE,
+  maxFieldsSize: MAX_FIELD_SIZE
 });
 
 const checkAcceptedExtensions = (file) => {
@@ -26,6 +28,8 @@ const uploadFile = async (req, res) => {
             }
             return res.status(500).json({ error: 'Le fichier ne peut pas être traité.' });
         }
+        
+        const {username} = fields
         
         const file = files.files;
         if (!file || file.size === 0) {
@@ -45,6 +49,7 @@ const uploadFile = async (req, res) => {
 
         try {
             await fs.promises.copyFile(file.filepath, newPath);
+            asyncQuery(sql,[newFilename])
             return res.json({ success: true });
         } catch (e) {
             return res.status(500).json({ error: 'Le fichier ne peut pas être enregistré.' });

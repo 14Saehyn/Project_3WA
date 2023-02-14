@@ -23,12 +23,12 @@ const Nav = (props) => {
         </li>
         <li>
           <NavLink to="/login">
-            S'identifier
+            Se connecter
           </NavLink>
         </li>
         <li>
-          <NavLink to="/addUser">
-            Ajouter un utilisateur
+          <NavLink to="/signup">
+            S'inscrire
           </NavLink>
         </li>
         <li>
