@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom"
+import {useParams, NavLink} from "react-router-dom"
 import axios from "axios"
 import {BASE_URL} from "../tools/constante.js"
 import {useState, useEffect, Fragment, useReducer} from "react"
@@ -69,6 +69,7 @@ const EditUsers = () => {
                         <option value='1'>Admin</option>
                         <option value='2'>User</option>
                     </select>
+                    <button><NavLink to={`/avatar/${user.id}`}>Modifier l'avatar</NavLink></button>
                     <input type='submit' />
                     <button onClick = {() => openModal(user.id)}>Supprimer</button>
                 </form>
