@@ -1,12 +1,14 @@
 import {Fragment, useState} from 'react'
 import {BASE_URL} from "../tools/constante.js"
 import axios from 'axios'
-
+import {useParams} from 'react-router-dom'
 // import {AppContext} from './reducer/reducer.js'
 
 const UploadFile = () => {
     // const [state, dispatch] = useContext(AppContext)
-    const [name, setName] = useState("")
+    
+    const {id} = useParams()
+    const [successMessage, setSuccessMessage] = useState(null)
     
     const submit = (e) => {
         e.preventDefault()
@@ -16,15 +18,17 @@ const UploadFile = () => {
         console.log(files)
         
         // ajouter d'autre input au formulaire
-        dataFile.append('name', name)
+        dataFile.append('id', id)
+        dataFile.append('avatar', files[0]);
         
         // L'image
         dataFile.append('files', files[0], files[0].name)
         
-        axios.post(`${BASE_URL}/stockUploadFile`, dataFile)
+        axios.post(`${BASE_URL}/uploadFile`, dataFile)
         .then((res)=> {
-            console.log(res)
-            res.data.response && console.log('succesfully upload');
+            console.log(res);
+            res.data.response && console.log('Téléchargement effectué');
+            setSuccessMessage("Avatar modifié avec succès !")
         })
         .catch((err) => {
             console.log(err)
@@ -33,10 +37,12 @@ const UploadFile = () => {
     
     return (
         <Fragment>
-            <h1>Ajouter/Modifier l'avatar</h1>
+            {successMessage && (
+                <p>{successMessage}</p>
+            )}
+            <h2>Ajouter ou modifier l'avatar</h2>
             <form onSubmit={submit} encType="multipart/form-data">
-            <input type='text' name='name' value={name} onChange={(e) => setName(e.target.value)} />
-                <label name='avatar'>
+                <label name="avatar">
                     <input type='file' name='avatar'/>
                 </label>
                 <input type='submit' value='Submit'/>

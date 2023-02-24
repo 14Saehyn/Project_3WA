@@ -1,9 +1,9 @@
 import {asyncQuery} from "../config/database.js"
 import bcrypt from 'bcrypt'
 
-const emailExist  = async (email) => {
+const emailExist = async (email) => {
     const sql = "SELECT * FROM users WHERE email = ?"
-    const response  = await asyncQuery(sql,[email])
+    const response = await asyncQuery(sql,[email])
     if(response.length > 0) return true
     return false
 }
@@ -11,7 +11,8 @@ const emailExist  = async (email) => {
 export default async (req, res) => {
     const saltRounds = 10
     const {first_name, last_name, email, password, birthdate} = req.body
-    const sql = "INSERT INTO users (first_name, last_name, email, password, registration_date, birthdate, roles_id) VALUES (?, ?, ?, ?, ?, ?, ?)"
+    const avatar = "default.jpg";
+    const sql = "INSERT INTO users (first_name, last_name, email, password, avatar, registration_date, birthdate, roles_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     
     if(password.length <= 8){
         return {response:"Mot de passe trop court"}
@@ -32,10 +33,10 @@ export default async (req, res) => {
         }
         
         // On hash le password
-        const mdpHash = await bcrypt.hash(password,saltRounds)
+        const mdpHash = await bcrypt.hash(password, saltRounds)
         
         // on creer la liste des params pour add user
-        const paramsSql = [first_name, last_name, email, mdpHash, new Date(), birthdate, 2]
+        const paramsSql = [first_name, last_name, email, mdpHash, avatar, new Date(), birthdate, 2]
         
         // on fait la requete
         const createUser = await asyncQuery(sql, paramsSql)
@@ -47,4 +48,3 @@ export default async (req, res) => {
         return
     }
 }
-

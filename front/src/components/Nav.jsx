@@ -1,14 +1,16 @@
 import {NavLink} from "react-router-dom";
-import {useEffect} from 'react'
+import {useEffect, useContext} from 'react'
 import axios from 'axios'
+import {StoreContext} from "../tools/context.js"
 
 const Nav = (props) => {
+  const [state] = useContext(StoreContext)
   
-   useEffect(() => {
-    if(!axios.defaults.headers.common['Authorization']){
+  useEffect(() => {
+    if (!axios.defaults.headers.common["Authorization"]) {
       const token = localStorage.getItem("jwtToken")
-      if(token){
-        axios.defaults.headers.common['Authorization'] = 'Bearer '+token
+      if (token) {
+      axios.defaults.headers.common["Authorization"] = "Bearer" + token
       }
     }
   },[])
@@ -18,42 +20,52 @@ const Nav = (props) => {
       <ul>
         <li>
           <NavLink to="/">
-            Home
+            Accueil
           </NavLink>
         </li>
         <li>
-          <NavLink to="/login">
-            Se connecter
-          </NavLink>
-        </li>
-        <li>
+        {!state.isLogged &&
           <NavLink to="/signup">
             S'inscrire
           </NavLink>
+        }
         </li>
         <li>
-          <NavLink to="/addArticle">
-            Ajouter un article
+        {state.isLogged ?
+          (<NavLink to={`/profile/${state.user.id}`}>
+            Mon profil
+          </NavLink>)
+            :
+          (<NavLink to="/login">
+            Se connecter
+          </NavLink>)
+        }
+        </li>
+        <li>
+          <NavLink to="/admin">
+            Panel Admin
           </NavLink>
+          <ul>
+            <li>
+              <NavLink to="/addProducts">
+                Ajouter un produit
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/users">
+                Tous les utilisateurs
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/products">
+                Tous les produits
+              </NavLink>
+            </li>
+          </ul>
         </li>
         <li>
-          <NavLink to="/addComment">
-            Ajouter un commentaire
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/users">
-            Tous les utilisateurs
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/articles">
-            Tous les articles
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/commentaires">
-            Tous les commentaires
+          <NavLink to="/collections">
+            Nos collections
           </NavLink>
         </li>
       </ul>

@@ -1,7 +1,6 @@
-import React from 'react';
 import Modal from 'react-modal';
 
-const ConfirmationModal = ({isOpen, message, onConfirm, onCancel}) => {
+const ConfirmationModal = ({isOpen, onConfirm, onCancel}) => {
   return (
     <Modal isOpen={isOpen} onRequestClose={onCancel} className="confirmation-modal-content" overlayClassName="confirmation-modal">
       <p>Êtes-vous sûr ?</p>

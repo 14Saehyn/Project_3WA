@@ -1,6 +1,6 @@
 import axios from "axios"
 import {BASE_URL} from '../tools/constante.js'
-import {useState} from "react"
+import {useState, Fragment} from "react"
 
 const Signup = () => {
     const [userData, setUserData] = useState({
@@ -29,14 +29,16 @@ const Signup = () => {
     
     
     return(
-        <form onSubmit={submit}>
-            <input type='text' placeholder='Votre prénom' name='first_name' onChange={handleChange} value={userData.first_name} />
-            <input type='text' placeholder='Votre nom' name='last_name' onChange={handleChange} value={userData.last_name} />
-            <input type='text' placeholder='Votre email' name='email' onChange={handleChange} value={userData.email} />
-            <input type='password' placeholder='Votre mot de passe' name='password' onChange={handleChange} value={userData.password} />
-            <input type='date' name='birthdate' onChange={handleChange} value={userData.birthdate} min='1923-01-01' max='2023-12-31' />
-            <input type='submit' />
-        </form>    
+        <Fragment>
+            <form onSubmit={submit}>
+                <input type='text' placeholder='Votre prénom' name='first_name' onChange={handleChange} value={userData.first_name} />
+                <input type='text' placeholder='Votre nom' name='last_name' onChange={handleChange} value={userData.last_name} />
+                <input type='text' placeholder='Votre email' name='email' onChange={handleChange} value={userData.email} />
+                <input type='password' placeholder='Votre mot de passe' name='password' onChange={handleChange} value={userData.password} />
+                <input type='date' name='birthdate' onChange={handleChange} value={userData.birthdate} min='1923-01-01' max='2023-12-31' />
+                <input type='submit' />
+            </form>
+        </Fragment>
     )
 }
 

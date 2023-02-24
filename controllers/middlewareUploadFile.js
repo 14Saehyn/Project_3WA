@@ -4,7 +4,7 @@ import fs from 'fs';
 
 
 const allowedExtensions = ['jpeg', 'jpg', 'png', 'gif'];
-const imageDirectory = 'public/img';
+const imageDirectory = 'public/img/user';
 const MAX_FIELD_SIZE = 20 * 1024 * 1024;
 
 const form = formidable({
