@@ -19,29 +19,62 @@ import GetJosei from "../controllers/getJosei.js";
 import GetSeinen from "../controllers/getSeinen.js";
 import GetFavorite from "../controllers/getFavorite.js";
 import Login from "../controllers/login.js";
+import checkToken from '../controllers/checkToken.js';
+import middleware from "../controllers/middleware.js";
+import AddReviews from "../controllers/addReviews.js";
+import ReviewsByProductsId from "../controllers/reviewsByProductsId.js";
+import GetReviews from "../controllers/getReviews.js";
+import DeleteReviewsById from "../controllers/deleteReviewsById.js";
+import ReviewsByUsersId from "../controllers/reviewsByUsersId.js";
+import Contact from "../controllers/contact.js";
+import AddToCart from "../controllers/addToCart.js";
+import GetCart from "../controllers/getCart.js";
+import DeleteCartProducts from "../controllers/deleteCartProducts.js";
 
 const router = express.Router();
 
-/* Routes GET */
-router.get("/", testController)
-router.get("/getUsers", GetUsers)
-router.get("/getProducts", GetProducts)
-router.get("/getShonen", GetShonen)
-router.get("/getJosei", GetJosei)
-router.get("/getSeinen", GetSeinen)
-router.get("/getFavorite", GetFavorite)
+const routesGET = [
+    {route: "/", controller: testController},
+    {route: "/getUsers", controller: GetUsers},
+    {route: "/getProducts", controller: GetProducts},
+    {route: "/getShonen", controller: GetShonen},
+    {route: "/getJosei", controller: GetJosei},
+    {route: "/getSeinen", controller: GetSeinen},
+    {route: "/getFavorite", controller: GetFavorite},
+    {route: "/getReviews", controller: GetReviews}
+]
 
-/* Routes POST */
-router.post("/signup", Signup)
-router.post("/getUsersById", GetUsersById)
-router.post("/editUsersById", EditUsersById)
-router.post("/deleteUsersById", DeleteUsersById)
-router.post("/uploadFile", middlewareUploadFile, UploadFile)
-router.post("/addProducts", middlewareProductUploadFile, AddProducts)
-router.post("/getProductsById", GetProductsById)
-router.post("/editProductsById", EditProductsById)
-router.post("/productsUploadFile", middlewareProductUploadFile, ProductsUploadFile)
-router.post("/deleteProductsById", DeleteProductsById)
-router.post("/login", Login)
+const routesPOST = [
+    {route: "/signup", controller: Signup},
+    {route: "/getUsersById", controller: GetUsersById},
+    {route: "/editUsersById", controller: EditUsersById},
+    {route: "/deleteUsersById", controller: DeleteUsersById},
+    {route: "/getProductsById", controller: GetProductsById},
+    {route: "/editProductsById", controller: EditProductsById},
+    {route: "/deleteProductsById", controller: DeleteProductsById},
+    {route: "/getReviewsByProductsId", controller: ReviewsByProductsId},
+    {route: "/getReviewsByUsersId", controller: ReviewsByUsersId},
+    {route: "/login", controller: Login},
+    {route: "/addReviews", controller: AddReviews},
+    {route: "/deleteReviewsById", controller: DeleteReviewsById},
+    {route: "/addToCart", controller: AddToCart},
+    {route: "/getCart", controller: GetCart},
+    {route: "/deleteCartProducts", controller: DeleteCartProducts},
+    {route: "/contact", controller: Contact}
+]
+
+router.post("/uploadFile", middlewareUploadFile, middleware, UploadFile)
+router.post("/addProducts", middlewareProductUploadFile, middleware, AddProducts)
+router.post("/productsUploadFile", middlewareProductUploadFile, middleware, ProductsUploadFile)
+
+routesGET.map((item) => {
+    router.get(item.route, middleware, item.controller);
+})
+
+routesPOST.map((item) => {
+    router.post(item.route, middleware, item.controller);
+})
+
+router.get("/relogged", checkToken)
 
 export default router;

@@ -1,7 +1,7 @@
-import axios from "axios"
-import {NavLink} from "react-router-dom"
-import {BASE_URL} from '../tools/constante.js'
-import {useEffect, useState} from "react"
+import axios from "axios";
+import {NavLink} from "react-router-dom";
+import {BASE_URL} from '../tools/constante.js';
+import {useEffect, useState} from "react";
 
 const Products = () => {
     const [productsList, setProductsList] = useState([])
@@ -16,23 +16,44 @@ const Products = () => {
     
     return(
         <div>
-            {productsList.map((product, i) => {
-            console.log(product.picture)
-                return(
-                    <ul key={i}>
-                        <img src={`${BASE_URL}/img/product/${product.picture}`} alt={`Première de couverture de ${product.title}`} width="175" height="263" border= "1px solid black"/>
-                        <li>ID : {product.id}</li>
-                        <li>Titre : {product.title}</li>
-                        <li>Catégorie : {product.name}</li>
-                        <li>Auteur : {product.author}</li>
-                        <li>Éditeur : {product.publisher}</li>
-                        <li>Statut : {product.status}</li>
-                        <li>Prix : {product.price} €</li>
-                        <li>Résumé : {product.resume}</li>
-                        <NavLink to={`/products/edit/${product.id}`}><button>Modifier</button></NavLink>
-                    </ul>
-                )
-            })}
+            <h1>Tous les produits</h1>
+            <NavLink to={`/addproducts`}><button>Ajouter un produit</button></NavLink>
+                <div>   
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Couverture</th>
+                                <th>Titre</th>
+                                <th>Catégorie</th>
+                                <th>Auteur</th>
+                                <th>Éditeur</th>
+                                <th>Statut</th>
+                                <th>Prix</th>
+                                <th>Résumé</th>
+                                <th>Éditer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {productsList.map((product, i) => {
+                                return (
+                                    <tr key={i}>
+                                        <td>{product.id}</td>
+                                        <td><img src={`${BASE_URL}/img/product/${product.picture}`} alt={`Première de couverture de ${product.title}`} width="175" height="263" border= "1px solid black"/></td>
+                                        <td>{product.title}</td>
+                                        <td>{product.name}</td>
+                                        <td>{product.author}</td>
+                                        <td>{product.publisher}</td>
+                                        <td>{product.status}</td>
+                                        <td>{product.price} €</td>
+                                        <td>{product.resume}</td>
+                                        <td><NavLink to={`/products/edit/${product.id}`}><button>Modifier</button></NavLink></td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
         </div>
     )
 }

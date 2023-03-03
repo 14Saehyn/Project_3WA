@@ -1,21 +1,20 @@
-import {BASE_URL} from '../tools/constante.js'
-import {useEffect, useState, Fragment, useReducer} from "react"
-import axios from 'axios'
-import {initialState} from "../tools/context.js"
-import {reducer} from "../tools/reducer.js"
-import {useParams} from "react-router-dom"
-import ConfirmationModal from "./ConfirmationModal.jsx"
-import UploadFile from "./UploadFile.jsx"
+import {BASE_URL} from '../tools/constante.js';
+import {useEffect, useState, Fragment, useReducer} from "react";
+import axios from 'axios';
+import {initialState} from "../tools/context.js";
+import {reducer} from "../tools/reducer.js";
+import {useParams, NavLink} from "react-router-dom";
+import ConfirmationModal from "./ConfirmationModal.jsx";
+import UploadFile from "./UploadFile.jsx";
 
 const UserProfile = () => {
     const [userInfos, setUserInfos] = useState('')
     const [state, dispatch] = useReducer(reducer, initialState);
     const {id} = useParams()
     const [successMessage, setSuccessMessage] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
     const [isDeleting, setIsDeleting] = useState(false);
     const [isDeleted, setIsDeleted] = useState(false);
-
+    
     const handleChange = (e) => {
         const {name, value} = e.target
         setUserInfos({ ...userInfos, [name]: value })
@@ -23,7 +22,6 @@ const UserProfile = () => {
     }
 
     useEffect(() => {
-        setIsLoading(true)
         axios.post(`${BASE_URL}/getUsersById`, {id})
             .catch(err => console.log(err))
             .then(res => {
@@ -32,7 +30,6 @@ const UserProfile = () => {
                 data.birthdate = data.birthdate.split('T')[0]
                 setUserInfos(data)
             })
-            .then(res => setIsLoading(false))
     }, [id])
 
     const openModal = (id) => {
@@ -64,11 +61,7 @@ const UserProfile = () => {
     const closeModal = () => {
         dispatch({type: 'closeModal'});
     }
-
-    if (isLoading || !userInfos) {
-        return <div>Chargement des informations...</div>
-    }
-
+    
     return (
         <Fragment>
             <ConfirmationModal isOpen={state.confirmOpen} onConfirm={() => deleteUser(state.payload)} onCancel={closeModal}/>
@@ -80,6 +73,7 @@ const UserProfile = () => {
                 {isDeleted && (
                     <p>Suppression effectuée avec succès !</p>
                 )}
+                <img src={`${BASE_URL}/img/user/${userInfos.avatar}`} alt={`Avatar de ${userInfos.first_name} ${userInfos.last_name}`} width="100" height="100" border= "1px solid black"/>
                 <UploadFile />
                 <h2>Modifier les informations</h2>
                 <form onSubmit={submit}>
@@ -91,16 +85,13 @@ const UserProfile = () => {
                     <input type='text' name='email' placeholder='Nouvel e-mail' onChange={handleChange} value={userInfos.email} />
                     <label>Date de naissance :  </label>
                     <input type='date' name='birthdate' onChange={handleChange} value={userInfos.birthdate} min="1923-01-01" max="2024-01-01" />
-                    <label>Rôle : </label>
-                    <select  name='roles_id' onChange={handleChange} value={userInfos.roles_id}>
-                        <option value='1'>Admin</option>
-                        <option value='2'>User</option>
-                    </select>
                     <input type='submit' />
+                    <NavLink to="/logout"><button>Se déconnecter</button></NavLink>
                     <button onClick = {() => {
                     setIsDeleting(true);
-                    openModal(userInfos.id)}}>Supprimer</button>
+                    openModal(userInfos.id)}}>Supprimer le compte</button>
                 </form>
+                <NavLink to={`/reviews/${userInfos.id}`}><button>Voir tous mes avis</button></NavLink>
                 </Fragment>
             )}
         </Fragment>

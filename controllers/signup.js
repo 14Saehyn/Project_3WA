@@ -13,6 +13,7 @@ export default async (req, res) => {
     const {first_name, last_name, email, password, birthdate} = req.body
     const avatar = "default.jpg";
     const sql = "INSERT INTO users (first_name, last_name, email, password, avatar, registration_date, birthdate, roles_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const sqlCart = "INSERT INTO cart (users_id) VALUES (?)";
     
     if(password.length <= 8){
         return {response:"Mot de passe trop court"}
@@ -40,9 +41,10 @@ export default async (req, res) => {
         
         // on fait la requete
         const createUser = await asyncQuery(sql, paramsSql)
+        const createCart = await asyncQuery(sqlCart, [createUser.insertId]);
         
         // on retourn la reponse
-        return {response:createUser}
+        res.json({response:createUser, createCart})
     } catch(err) {
         console.log(err)
         return

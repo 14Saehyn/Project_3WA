@@ -1,4 +1,3 @@
-import express from 'express';
 import {pool} from "../config/database.js"
 
 // Utiliser le middleware pour le téléchargement de fichiers

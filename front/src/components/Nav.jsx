@@ -2,6 +2,7 @@ import {NavLink} from "react-router-dom";
 import {useEffect, useContext} from 'react'
 import axios from 'axios'
 import {StoreContext} from "../tools/context.js"
+import NavAdmin from "./NavAdmin.jsx";
 
 const Nav = (props) => {
   const [state] = useContext(StoreContext)
@@ -23,51 +24,44 @@ const Nav = (props) => {
             Accueil
           </NavLink>
         </li>
-        <li>
         {!state.isLogged &&
-          <NavLink to="/signup">
-            S'inscrire
-          </NavLink>
-        }
+          <li>
+            <NavLink to="/signup">
+              S'inscrire
+            </NavLink>
         </li>
-        <li>
+        }
         {state.isLogged ?
-          (<NavLink to={`/profile/${state.user.id}`}>
-            Mon profil
-          </NavLink>)
+          (<li>
+            <NavLink to={`/profile/${state.user.id}`}>
+              Mon profil
+            </NavLink>
+          </li>)
             :
-          (<NavLink to="/login">
-            Se connecter
-          </NavLink>)
+          (<li>
+            <NavLink to="/login">
+              Se connecter
+            </NavLink>
+          </li>)
         }
-        </li>
-        <li>
-          <NavLink to="/admin">
-            Panel Admin
-          </NavLink>
-          <ul>
-            <li>
-              <NavLink to="/addProducts">
-                Ajouter un produit
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/users">
-                Tous les utilisateurs
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/products">
-                Tous les produits
-              </NavLink>
-            </li>
-          </ul>
-        </li>
+        <NavAdmin />
         <li>
           <NavLink to="/collections">
             Nos collections
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/contact">
+            Contact
+          </NavLink>
+        </li>
+        {state.isLogged &&
+        <li>
+          <NavLink to="/cart">
+            Panier
+          </NavLink>
+        </li>
+        }
       </ul>
     </nav>
   );

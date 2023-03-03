@@ -23,13 +23,28 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 user: action.payload,
                 isLogged: true
-            }
+            };
         case "LOGOUT":
             return {
                 ...state,
                 user: {},
                 isLogged: false
-            }
+            };
+        case "ADD_CART":
+            return {
+                ...state,
+                cart: [...state.cart, action.payload]
+            };
+        case "INIT_CART":
+            return {
+                ...state,
+                cart: action.payload
+            };
+        case "REMOVE_CART":
+            return {
+                ...state,
+                cart: state.cart.filter((product) => product.id !== action.payload.id)
+            };
         default:
             return state;
     }

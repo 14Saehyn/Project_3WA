@@ -40,6 +40,7 @@ const Login = () => {
                 localStorage.setItem("jwtToken", res.data.response.token);
                 axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.response.token;
                 setInfo(initialState);
+                alert ("Vous êtes connecté(e) !")
             }
         })
         .catch(err => {
@@ -55,10 +56,7 @@ const Login = () => {
     return (
         <Fragment>
             {state.isLogged ?
-            (state.user.roles_id === 1 ?
-                <Navigate to="/admin" replace={true} />
-            :
-                <Navigate to="/" replace={true} />)
+            (<Navigate to="/" replace={true} />)
             :
                 <div>
                     <h1>Se connecter</h1>

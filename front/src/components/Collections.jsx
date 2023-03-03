@@ -1,8 +1,25 @@
 import {NavLink} from "react-router-dom"
 import {BASE_URL} from '../tools/constante.js'
 import {Fragment} from "react"
+/*import {StoreContext} from "../tools/context.js";*/
+/*import axios from "axios";*/
 
 const Collections = () => {
+    /*const [state, dispatch] = React.useContext(StoreContext);
+    
+    useEffect(() => {
+        if(state.user.cart_id && state.cart.length === 0){
+            axios.post(`${BASE_URL}/getCart`, {cart_id: state.user.cart_id})
+            .then(res => {
+                // on met le panier dans le Reducer
+                dispatch({
+                    type:"ADD_CART", payload:res.data.result.cartProduct[0]
+                })
+            })
+            .catch(e => console.log(e))
+        }
+    },[state.user.cart_id])*/
+    
     return ( 
         <Fragment>
             <h1>Nos collections</h1>
