@@ -26,7 +26,6 @@ const inputCheck = (value, max = 255, min = 1) => {
         
         // on verifie si une valeur est vide
         for (const key in value) {
-            console.log(value[key].value)
             const element = value[key].trim().length;
                 if(element > max || element < min) {
                     return false
@@ -47,7 +46,6 @@ const checkInputValue = (data) => {
         // on verifie si une valeur est vide
         for (let key in data) {
             const element = data[key].trim().length;
-            console.log(element)
                 if(element === 0) {
                     return false
                 }

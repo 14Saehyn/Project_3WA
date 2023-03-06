@@ -21,6 +21,11 @@ const NavAdmin = () => {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/contactadmin">
+            Tous les messages
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/products">
             Tous les produits
           </NavLink>

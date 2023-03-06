@@ -25,6 +25,8 @@ import AddReviews from "../components/AddReviews.jsx";
 import ReviewsProducts from "../components/ReviewsByProducts.jsx";
 import Reviews from "../components/Reviews.jsx";
 import ReviewsUsers from "../components/ReviewsByUsers.jsx";
+import BookingConfirm from "../components/BookingConfirm.jsx";
+import ContactAdmin from "../components/ContactAdmin.jsx";
 
 const routes = [
     {path:"/", component:<Home />},
@@ -53,9 +55,11 @@ const routes = [
     {path:"/logout", component:<Logout />},
     {path:"/bio", component:<Bio />},
     {path:"/contact", component:<Contact />},
+    {path:"/contactadmin", component:<ContactAdmin />},
     {path:"/cart", component:<Cart />},
+    {path:"/cart/confirmation", component:<BookingConfirm />},
     {path:"/legalnotice", component:<LegalNotice />},
-    {path:"/addreviews/:products_id", component:<AddReviews />},
+    {path:"/details/addreviews/:products_id", component:<AddReviews />},
     
     {path:"*", component:<Error404 />}
 ]

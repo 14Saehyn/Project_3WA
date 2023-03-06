@@ -12,8 +12,6 @@ const AddReviews = () => {
         content: ""
     })
     
-    console.log(addReview)
-    
     const handleChange = (e) => {
         const {name, value} = e.target
         setAddReview({...addReview, [name]:value})
@@ -27,10 +25,9 @@ const AddReviews = () => {
             title: addReview.title,
             content: addReview.content
         }
-        console.log(data)
+        
         axios.post(`${BASE_URL}/addReviews`, data)
             .then((res) => {
-                console.log(res);
                 res.data.response && console.log("Avis enregistré");
             })
             .catch((err) => {

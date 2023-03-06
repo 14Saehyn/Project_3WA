@@ -1,5 +1,4 @@
 import axios from "axios"
-import {NavLink} from "react-router-dom"
 import {BASE_URL} from '../tools/constante.js'
 import {useEffect, useState, Fragment} from "react"
 
@@ -18,15 +17,15 @@ const Favorite = () => {
         <Fragment>
             <h1>Notre collection "Favoris"</h1>
             {favoriteList.map((favorite, i) => {
-            console.log(favorite.picture)
                 return(
                     <ul key={i}>
+                        <a href={`/collections/favoris/details/${favorite.id}`}>
                         <img src={`${BASE_URL}/img/product/${favorite.picture}`} alt={`Première de couverture de ${favorite.title}`} width="175" height="263" border= "1px solid black"/>
-                        <li>Titre : {favorite.title}</li>
-                        <li>Auteur : {favorite.author}</li>
-                        <li>Prix : {favorite.price} €</li>
-                        <NavLink to={`/collections/favoris/details/${favorite.id}`}><button>Détails</button></NavLink>
-                        <button>Ajouter au panier</button>
+                        </a>
+                        <a href={`/collections/favoris/details/${favorite.id}`}>
+                        <p>{favorite.title}</p>
+                        </a>
+                        <p>Prix : {favorite.price} €</p>
                     </ul>
                 )
             })}

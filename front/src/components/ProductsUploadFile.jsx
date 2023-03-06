@@ -15,8 +15,6 @@ const UploadFile = () => {
         const dataFile = new FormData();
         const files = {...e.target.picture.files};
         
-        console.log(files)
-        
         // ajouter d'autre input au formulaire
         dataFile.append('id', id)
         dataFile.append('picture', files[0]);
@@ -26,7 +24,6 @@ const UploadFile = () => {
         
         axios.post(`${BASE_URL}/productsUploadFile`, dataFile)
         .then((res)=> {
-            console.log(res);
             res.data.response && console.log('Téléchargement effectué');
             setSuccessMessage("Image modifiée avec succès !")
         })

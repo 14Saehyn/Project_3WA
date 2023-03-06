@@ -35,7 +35,6 @@ const Login = () => {
         .then(res => {
             setErrorMess(res.data.response)
             if (res.data.response.response) {
-                console.log(res.data.response.userData);
                 dispatch({type: "LOGIN", payload: res.data.response.userData});
                 localStorage.setItem("jwtToken", res.data.response.token);
                 axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.response.token;
@@ -50,8 +49,6 @@ const Login = () => {
             }
         })
     }
-    
-    console.log(state)
     
     return (
         <Fragment>

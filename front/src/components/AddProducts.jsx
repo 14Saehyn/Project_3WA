@@ -12,8 +12,6 @@ const AddProducts = () => {
         resume: ''
     })
     
-    console.log(addProduct)
-    
     const handleChange = (e) => {
         const {name, value} = e.target
         setAddProduct({...addProduct, [name]:value})
@@ -23,8 +21,6 @@ const AddProducts = () => {
         e.preventDefault()
         const dataFile = new FormData()
         const files = {...e.target.picture.files}
-        
-        console.log(files)
         
         /// D'autres input
         dataFile.append("title", addProduct.title)
@@ -42,7 +38,6 @@ const AddProducts = () => {
         
         axios.post(`${BASE_URL}/addProducts`, dataFile)
             .then((res) => {
-                console.log(res)
                 res.data.response && console.log("Téléchargement réussi");
             })
             .catch((err) => {

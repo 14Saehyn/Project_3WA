@@ -3,7 +3,6 @@ import bcrypt from "bcrypt"
 import {generateToken} from "../config/token.js"
 
 const generateResponse = async (userDataSQL) => {
-    console.log(userDataSQL)
     const ADMIN_ROLE_ID = 1
     const admin = userDataSQL.roles_id === ADMIN_ROLE_ID
 
@@ -29,7 +28,6 @@ const generateResponse = async (userDataSQL) => {
 
 export default async (req, res) => {
     const {password, email} = req.body
-    console.log (email)
       
     const sql = "SELECT * FROM users WHERE email = ?"
     
@@ -43,8 +41,6 @@ export default async (req, res) => {
         
         const sqlCartId = "SELECT id FROM cart WHERE users_id = ?";
         const userCart = await asyncQuery(sqlCartId, [result[0].id]);
-        
-        console.log(userCart)
         
         const userData = {cart_id:userCart[0].id, ...result[0]};
         

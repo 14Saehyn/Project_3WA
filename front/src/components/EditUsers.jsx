@@ -37,7 +37,6 @@ const EditUsers = () => {
     const deleteUser = (id) => {
         axios.post(`${BASE_URL}/deleteUsersById`, {id})
         .then(res => {
-            console.log(res);
             setIsDeleted(true);
             setIsDeleting(false);
             dispatch({type: 'confirmModal'});
@@ -51,16 +50,12 @@ const EditUsers = () => {
     
     const submit = (e) => {
         e.preventDefault()
-        console.log(user)
         axios.post(`${BASE_URL}/editUsersById`, {...user})
         .then(res => {
-            console.log(res);
             setSuccessMessage("Informations modifiées avec succès !");
         })
         .catch(err => console.log(err))
     }
-    
-    console.log(user)
     
     return (
         <Fragment>

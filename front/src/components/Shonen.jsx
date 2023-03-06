@@ -1,5 +1,4 @@
 import axios from "axios"
-import {NavLink} from "react-router-dom"
 import {BASE_URL} from '../tools/constante.js'
 import {useEffect, useState, Fragment} from "react"
 
@@ -18,15 +17,15 @@ const Shonen = () => {
         <Fragment>
             <h1>Notre collection "Shonen"</h1>
             {shonenList.map((shonen, i) => {
-            console.log(shonen.picture)
                 return(
                     <ul key={i}>
+                        <a href={`/collections/shonen/details/${shonen.id}`}>
                         <img src={`${BASE_URL}/img/product/${shonen.picture}`} alt={`Première de couverture de ${shonen.title}`} width="175" height="263" border= "1px solid black"/>
-                        <li>Titre : {shonen.title}</li>
-                        <li>Auteur : {shonen.author}</li>
-                        <li>Prix : {shonen.price} €</li>
-                        <NavLink to={`/collections/shonen/details/${shonen.id}`}><button>Détails</button></NavLink>
-                        <button>Ajouter au panier</button>
+                        </a>
+                        <a href={`/collections/shonen/details/${shonen.id}`}>
+                        <p>{shonen.title}</p>
+                        </a>
+                        <p>Prix : {shonen.price} €</p>
                     </ul>
                 )
             })}

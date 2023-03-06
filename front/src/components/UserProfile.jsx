@@ -18,14 +18,12 @@ const UserProfile = () => {
     const handleChange = (e) => {
         const {name, value} = e.target
         setUserInfos({ ...userInfos, [name]: value })
-        console.log(userInfos)
     }
 
     useEffect(() => {
         axios.post(`${BASE_URL}/getUsersById`, {id})
             .catch(err => console.log(err))
             .then(res => {
-                console.log(res)
                 const data = res.data.result[0]
                 data.birthdate = data.birthdate.split('T')[0]
                 setUserInfos(data)
@@ -38,10 +36,8 @@ const UserProfile = () => {
 
     const submit = (e) => {
         e.preventDefault()
-        console.log(userInfos)
         axios.post(`${BASE_URL}/editUsersById`, {...userInfos})
         .then (res => {
-            console.log(res);
             setSuccessMessage("Informations modifiées avec succès !");
         })
         .catch(err => console.log(err))
@@ -50,7 +46,6 @@ const UserProfile = () => {
     const deleteUser = (id) => {
         axios.post(`${BASE_URL}/deleteUsersById`, {id})
         .then(res => {
-            console.log(res);
             setIsDeleted(true);
             setIsDeleting(false);
             dispatch({type: 'confirmModal'});
@@ -85,7 +80,7 @@ const UserProfile = () => {
                     <input type='text' name='email' placeholder='Nouvel e-mail' onChange={handleChange} value={userInfos.email} />
                     <label>Date de naissance :  </label>
                     <input type='date' name='birthdate' onChange={handleChange} value={userInfos.birthdate} min="1923-01-01" max="2024-01-01" />
-                    <input type='submit' />
+                    <input type='submit' value="Modifier"/>
                     <NavLink to="/logout"><button>Se déconnecter</button></NavLink>
                     <button onClick = {() => {
                     setIsDeleting(true);

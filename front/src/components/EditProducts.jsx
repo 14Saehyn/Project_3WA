@@ -36,7 +36,6 @@ const EditProducts = () => {
     const deleteProduct = (id) => {
         axios.post(`${BASE_URL}/deleteProductsById`, {id})
         .then(res => {
-            console.log(res);
             setIsDeleted(true);
             setIsDeleting(false);
             dispatch({type: 'confirmModal'});
@@ -50,16 +49,12 @@ const EditProducts = () => {
     
     const submit = (e) => {
         e.preventDefault()
-        console.log(product)
         axios.post(`${BASE_URL}/editProductsById`, {...product})
         .then(res => {
-            console.log(res);
             setSuccessMessage("Informations modifiées avec succès !");
         })
         .catch(err => console.log(err))
     }
-    
-    console.log(product)
     
     return (
         <Fragment>
@@ -103,7 +98,7 @@ const EditProducts = () => {
                         <select name="status" onChange={handleChange} value={product.status}>
                             <option value="">Choisir un statut</option>
                             <option>En stock</option>
-                            <option>En rupture de stock</option>
+                            <option>Rupture de stock</option>
                         </select>
                         <input type="number" name="price" onChange={handleChange} value={product.price} />
                         <textarea name="resume" onChange={handleChange} value={product.resume} />

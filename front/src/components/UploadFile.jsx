@@ -15,8 +15,6 @@ const UploadFile = () => {
         const dataFile = new FormData();
         const files = {...e.target.avatar.files};
         
-        console.log(files)
-        
         // ajouter d'autre input au formulaire
         dataFile.append('id', id)
         dataFile.append('avatar', files[0]);
@@ -26,7 +24,6 @@ const UploadFile = () => {
         
         axios.post(`${BASE_URL}/uploadFile`, dataFile)
         .then((res)=> {
-            console.log(res);
             res.data.response && console.log('Téléchargement effectué');
             setSuccessMessage("Avatar modifié avec succès !")
         })

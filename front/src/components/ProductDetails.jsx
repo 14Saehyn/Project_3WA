@@ -8,8 +8,6 @@ const ProductDetails = () => {
     const {id} = useParams();
     const [productDetails, setProductDetails] = useState([]);
     const [state, dispatch] = useContext(StoreContext);
-    
-    console.log(state)
 
     useEffect(() => {
         axios.post(`${BASE_URL}/getProductsById`, {id})
@@ -29,7 +27,6 @@ const ProductDetails = () => {
             cart_id: state.user.cart_id,
             products_id: product.id
         })
-        .then(res => console.log(res))
         .catch(e => console.log(e))
     };
     
@@ -46,9 +43,13 @@ const ProductDetails = () => {
                         <li>Statut : {product.status}</li>
                         <li>Prix : {product.price} €</li>
                         <li>Résumé : {product.resume}</li>
-                         <button onClick={() => addToCart(product)}>Ajouter au panier</button>
+                        {product.status === "Rupture de stock" ? (
+                            <p>Ce produit est en rupture de stock.</p>
+                        ) : (
+                            <button onClick={() => addToCart(product)}>Ajouter au panier</button>
+                        )}
                     </ul>
-                    <NavLink to={`/addreviews/${product.id}`}><button>Donner un avis</button></NavLink>
+                    <NavLink to={`/details/addreviews/${product.id}`}><button>Donner un avis</button></NavLink>
                     <NavLink to={`/details/reviews/${product.id}`}><button>{`Voir les avis de ${product.title}`}</button></NavLink>
                 </Fragment>
                 )

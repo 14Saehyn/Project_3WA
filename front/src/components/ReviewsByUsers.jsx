@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom"
 import axios from "axios"
 import {BASE_URL} from "../tools/constante.js"
-import {useState, useEffect, useReducer} from "react"
+import {useState, useEffect, useReducer, Fragment} from "react"
 import {reducer} from "../tools/reducer.js"
 import {initialState} from "../tools/context.js"
 import ConfirmationModal from "./ConfirmationModal.jsx"
@@ -22,7 +22,6 @@ const AllReviewsUsers = () => {
         axios.post(`${BASE_URL}/deleteReviewsById`, {id})
         .then(res => {
             dispatch({type: 'confirmModal'});
-            console.log(res);
             setIsDeleted(true);
         })
         .catch(err => console.log(err))
@@ -37,6 +36,8 @@ const AllReviewsUsers = () => {
     }
     
     return(
+        <Fragment>
+        {allReviewsUsers.length > 0 ? (
         <div>
             <ConfirmationModal isOpen={state.confirmOpen} onConfirm={() => deleteReview(state.payload)} onCancel={closeModal}/>
             {isDeleted && (
@@ -67,6 +68,10 @@ const AllReviewsUsers = () => {
                 </table>    
             </div>
         </div>
+        ) : (
+            <h1>Vous avez écrit aucun avis pour l'instant</h1>
+        )}
+        </Fragment>
     )
 }
 

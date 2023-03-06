@@ -30,6 +30,9 @@ import Contact from "../controllers/contact.js";
 import AddToCart from "../controllers/addToCart.js";
 import GetCart from "../controllers/getCart.js";
 import DeleteCartProducts from "../controllers/deleteCartProducts.js";
+import DeleteCart from "../controllers/deleteCart.js";
+import GetContact from "../controllers/getContact.js";
+import DeleteContactById from "../controllers/deleteContactById.js";
 
 const router = express.Router();
 
@@ -41,7 +44,8 @@ const routesGET = [
     {route: "/getJosei", controller: GetJosei},
     {route: "/getSeinen", controller: GetSeinen},
     {route: "/getFavorite", controller: GetFavorite},
-    {route: "/getReviews", controller: GetReviews}
+    {route: "/getReviews", controller: GetReviews},
+    {route: "/getContact", controller: GetContact}
 ]
 
 const routesPOST = [
@@ -60,7 +64,9 @@ const routesPOST = [
     {route: "/addToCart", controller: AddToCart},
     {route: "/getCart", controller: GetCart},
     {route: "/deleteCartProducts", controller: DeleteCartProducts},
-    {route: "/contact", controller: Contact}
+    {route: "/deleteCart", controller: DeleteCart},
+    {route: "/contact", controller: Contact},
+    {route: "/deleteContactById", controller: DeleteContactById}
 ]
 
 router.post("/uploadFile", middlewareUploadFile, middleware, UploadFile)

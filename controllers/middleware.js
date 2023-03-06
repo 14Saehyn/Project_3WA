@@ -37,8 +37,6 @@ export default async(req, res, next) => {
     // recupere la route a la quel on souhaite acceder
     const pathname = parseurl(req).pathname.split('/')[1];
     
-    console.log(pathname)
-    
     // Bear jdlsqdjsqdsq5d6sq74d654sqd4qs6d68sq4d6qs4d
     const headersAuth = req.headers['authorization']
     
