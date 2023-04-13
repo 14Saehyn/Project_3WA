@@ -13,7 +13,6 @@ const UserProfile = () => {
     const {id} = useParams()
     const [successMessage, setSuccessMessage] = useState(null)
     const [isDeleting, setIsDeleting] = useState(false);
-    const [isDeleted, setIsDeleted] = useState(false);
     
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -25,7 +24,6 @@ const UserProfile = () => {
             .catch(err => console.log(err))
             .then(res => {
                 const data = res.data.result[0]
-                data.birthdate = data.birthdate.split('T')[0]
                 setUserInfos(data)
             })
     }, [id])
@@ -33,6 +31,16 @@ const UserProfile = () => {
     const openModal = (id) => {
         dispatch({type: 'openModal', payload: id})
     }
+    
+    useEffect(() => {
+        let timeout;
+        if (successMessage) {
+            timeout = setTimeout(() => {
+                setSuccessMessage(false);
+            }, 5000);
+        }
+        return () => clearTimeout(timeout);
+    }, [successMessage, setSuccessMessage]);
 
     const submit = (e) => {
         e.preventDefault()
@@ -46,12 +54,13 @@ const UserProfile = () => {
     const deleteUser = (id) => {
         axios.post(`${BASE_URL}/deleteUsersById`, {id})
         .then(res => {
-            setIsDeleted(true);
             setIsDeleting(false);
             dispatch({type: 'confirmModal'});
+            alert("Suppression effectuée avec succès !");
         })
         .catch(err => console.log(err))
-    }
+    };
+
     
     const closeModal = () => {
         dispatch({type: 'closeModal'});
@@ -62,31 +71,34 @@ const UserProfile = () => {
             <ConfirmationModal isOpen={state.confirmOpen} onConfirm={() => deleteUser(state.payload)} onCancel={closeModal}/>
             {userInfos && (
                 <Fragment>
-                {!isDeleting && successMessage && !isDeleted && (
-                    <p>{successMessage}</p>
-                )}
-                {isDeleted && (
-                    <p>Suppression effectuée avec succès !</p>
-                )}
-                <img src={`${BASE_URL}/img/user/${userInfos.avatar}`} alt={`Avatar de ${userInfos.first_name} ${userInfos.last_name}`} width="100" height="100" border= "1px solid black"/>
-                <UploadFile />
-                <h2>Modifier les informations</h2>
-                <form onSubmit={submit}>
-                    <label>Prénom : </label>
-                    <input type='text' name='first_name' placeholder='Nouveau prénom' onChange={handleChange} value={userInfos.first_name} />
-                    <label>Nom : </label>
-                    <input type='text' name='last_name' placeholder='Nouveau nom' onChange={handleChange} value={userInfos.last_name} />
-                    <label>E-mail : </label>
-                    <input type='text' name='email' placeholder='Nouvel e-mail' onChange={handleChange} value={userInfos.email} />
-                    <label>Date de naissance :  </label>
-                    <input type='date' name='birthdate' onChange={handleChange} value={userInfos.birthdate} min="1923-01-01" max="2024-01-01" />
-                    <input type='submit' value="Modifier"/>
-                    <NavLink to="/logout"><button>Se déconnecter</button></NavLink>
-                    <button onClick = {() => {
-                    setIsDeleting(true);
-                    openModal(userInfos.id)}}>Supprimer le compte</button>
-                </form>
-                <NavLink to={`/reviews/${userInfos.id}`}><button>Voir tous mes avis</button></NavLink>
+                    <div className="header-container">
+                        <h1 className="header-title">Mon profil</h1>
+                    </div>
+                    <div className="content-wrapper_header">
+                        {!isDeleting && successMessage && (
+                            <p className="success-message profile-message">{successMessage}</p>
+                        )}
+                        <img src={`${BASE_URL}/img/user/${userInfos.avatar}`} alt={`Avatar de ${userInfos.first_name} ${userInfos.last_name}`} className="avatar"/>
+                        <UploadFile />
+                        <div className="user-infos-container">
+                            <h2 className="title_h2">Modifier les informations</h2>
+                            <form onSubmit={submit}>
+                                <input type='text' name='first_name' placeholder='Nouveau prénom' onChange={handleChange} value={userInfos.first_name} />
+                                <input type='text' name='last_name' placeholder='Nouveau nom' onChange={handleChange} value={userInfos.last_name} />
+                                <input type='text' name='email' placeholder='Nouvel e-mail' onChange={handleChange} value={userInfos.email} />
+                                <input type='submit' value="Modifier" className="text-input"/>
+                            </form>
+                        </div>
+                        <div className="user-buttons-container">
+                            <NavLink to={`/reviews/${userInfos.id}`}>
+                                <button className="profile-button review">Voir tous mes avis</button>
+                            </NavLink>
+                             <NavLink to="/logout">
+                                <button className="profile-button logout">Se déconnecter</button>
+                             </NavLink>
+                            <button onClick = {() => {setIsDeleting(true); openModal(userInfos.id)}} className="profile-button delete">Supprimer le compte</button>
+                        </div>
+                    </div>
                 </Fragment>
             )}
         </Fragment>

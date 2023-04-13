@@ -1,8 +1,9 @@
 import axios from "axios"
 import {BASE_URL} from "../tools/constante.js"
-import {useState, Fragment} from "react"
+import {useState, Fragment, useEffect} from "react"
 
 const AddProducts = () => {
+    const [isProductAdded, setIsProductAdded] = useState(false);
     const [addProduct, setAddProduct] = useState({
         title: '',
         author: '',
@@ -10,15 +11,36 @@ const AddProducts = () => {
         status: '',
         price: '',
         resume: ''
-    })
+    });
     
     const handleChange = (e) => {
         const {name, value} = e.target
         setAddProduct({...addProduct, [name]:value})
     }
     
+    useEffect(() => {
+        let timeout;
+        if (isProductAdded) {
+            timeout = setTimeout(() => {
+                setIsProductAdded(false);
+            }, 5000);
+        }
+        return () => clearTimeout(timeout);
+    }, [isProductAdded, setIsProductAdded]);
+    
     const submit = (e) => {
         e.preventDefault()
+         if (!addProduct.title ||
+         !addProduct.categories_id ||
+         !addProduct.author ||
+         !addProduct.publisher ||
+         !addProduct.status ||
+         !addProduct.price ||
+         !addProduct.resume ||
+         !e.target.picture.files[0]) {
+            alert('Veuillez remplir tous les champs.')
+            return
+        }
         const dataFile = new FormData()
         const files = {...e.target.picture.files}
         
@@ -34,11 +56,9 @@ const AddProducts = () => {
         /// Input de l'image
         dataFile.append("files", files[0], files[0].name)
         
-        
-        
         axios.post(`${BASE_URL}/addProducts`, dataFile)
             .then((res) => {
-                res.data.response && console.log("Téléchargement réussi");
+                res.data.response && setIsProductAdded(true);
             })
             .catch((err) => {
                 console.log(err)
@@ -47,6 +67,7 @@ const AddProducts = () => {
     
     return(
         <Fragment>
+            {isProductAdded && <p>Le produit a été créé avec succès !</p>}
             <form onSubmit={submit} encType="multipart/form-data">
                 <input type="text" placeholder="Titre du produit" name="title" onChange={handleChange} value={addProduct.titre} />
                 <select name="categories_id" onChange={handleChange} value={addProduct.categories_id}>
@@ -74,7 +95,7 @@ const AddProducts = () => {
                     <option>Soleil</option>
                 </select>
                 <select name="status" onChange={handleChange} value={addProduct.status}>
-                    <option>Choisir un statut</option>
+                    <option value="">Choisir un statut</option>
                     <option>En stock</option>
                     <option>En rupture de stock</option>
                 </select>
@@ -91,4 +112,3 @@ const AddProducts = () => {
 }
 
 export default AddProducts;
-

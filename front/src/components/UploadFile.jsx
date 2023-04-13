@@ -1,4 +1,4 @@
-import {Fragment, useState} from 'react'
+import {Fragment, useState, useEffect} from 'react'
 import {BASE_URL} from "../tools/constante.js"
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
@@ -9,6 +9,16 @@ const UploadFile = () => {
     
     const {id} = useParams()
     const [successMessage, setSuccessMessage] = useState(null)
+    
+    useEffect(() => {
+        let timeout;
+        if (successMessage) {
+            timeout = setTimeout(() => {
+                setSuccessMessage(false);
+            }, 5000);
+        }
+        return () => clearTimeout(timeout);
+    }, [successMessage, setSuccessMessage]);
     
     const submit = (e) => {
         e.preventDefault()
@@ -35,14 +45,12 @@ const UploadFile = () => {
     return (
         <Fragment>
             {successMessage && (
-                <p>{successMessage}</p>
+                <p className="success-message profile-message">{successMessage}</p>
             )}
-            <h2>Ajouter ou modifier l'avatar</h2>
+            <h2 className="title_h2">Modifier l'avatar</h2>
             <form onSubmit={submit} encType="multipart/form-data">
-                <label name="avatar">
-                    <input type='file' name='avatar'/>
-                </label>
-                <input type='submit' value='Submit'/>
+                <input className="file-chosen" type='file' name='avatar'/>
+                <input type='submit' value='Modifier' className="text-input"/>
             </form>
         </Fragment>
     )

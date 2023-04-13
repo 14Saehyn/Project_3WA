@@ -6,7 +6,7 @@ export default async (req, res) => {
     try {
         const paramsSQL = [products_id, users_id, title, content]
         const createReview = await asyncQuery (sql, paramsSQL)
-        return {response: createReview}
+        return res.json({response: createReview})
     } catch (err) {
         console.log (err)
         return

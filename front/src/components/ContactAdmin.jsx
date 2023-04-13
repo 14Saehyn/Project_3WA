@@ -22,8 +22,11 @@ const ContactAdmin = () => {
     const deleteContact = (id) => {
         axios.post(`${BASE_URL}/deleteContactById`, {id})
         .then(res => {
+            const listContact = [...contactList].filter(e => e.id !== id)
+            setContactList(listContact)
             dispatch({type: 'confirmModal'});
             setIsDeleted(true);
+            setTimeout(() => setIsDeleted(false), 5000);
         })
         .catch(err => console.log(err))
     }

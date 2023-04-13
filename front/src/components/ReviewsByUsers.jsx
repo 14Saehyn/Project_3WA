@@ -18,6 +18,16 @@ const AllReviewsUsers = () => {
             .catch(err => console.log(err))
     }, [users_id])
     
+    useEffect(() => {
+        let timeout;
+        if (isDeleted) {
+            timeout = setTimeout(() => {
+                setIsDeleted(false);
+            }, 5000);
+        }
+        return () => clearTimeout(timeout);
+    }, [isDeleted, setIsDeleted]);
+    
     const deleteReview = (id) => {
         axios.post(`${BASE_URL}/deleteReviewsById`, {id})
         .then(res => {

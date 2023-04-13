@@ -1,11 +1,16 @@
 import axios from "axios"
 import {NavLink} from "react-router-dom"
 import {BASE_URL} from '../tools/constante.js'
-import {useEffect, useState} from "react"
+import {useEffect, useState, useReducer, Fragment} from "react"
 import {formatDate} from "../tools/date.js"
+import {reducer} from "../tools/reducer.js"
+import {initialState} from "../tools/context.js"
+import ConfirmationModal from "./ConfirmationModal.jsx"
 
 const Users = () => {
     const [usersList, setUsersList] = useState([])
+    const [isDeleted, setIsDeleted] = useState(false);
+    const [state, dispatch] = useReducer(reducer, initialState);
     
     useEffect(() => {
         if(usersList.length === 0){
@@ -14,10 +19,45 @@ const Users = () => {
                 .catch(err => console.log(err))
         }
     },[usersList])
+    
+    useEffect(() => {
+        let timeout;
+        if (isDeleted) {
+            timeout = setTimeout(() => {
+                setIsDeleted(false);
+            }, 5000);
+        }
+        return () => clearTimeout(timeout);
+    }, [isDeleted, setIsDeleted]);
+    
+    const deleteUser = (id) => {
+        axios.post(`${BASE_URL}/deleteUsersById`, {id})
+        .then(res => {
+            const listContact = [...usersList].filter(e => e.id !== id)
+            setUsersList(listContact)
+            dispatch({type: 'confirmModal'});
+            setIsDeleted(true);
+        })
+        .catch(err => console.log(err))
+    }
+    
+    const openModal = (id) => {
+        dispatch({type: 'openModal', payload: id})
+    }
+    
+    const closeModal = () => {
+        dispatch({type: 'closeModal'});
+    }
 
     return(
-        <div>
-            <h1>Tous les utilisateurs</h1>
+        <Fragment>
+        {usersList.length > 0 ? (
+            <div>
+                <ConfirmationModal isOpen={state.confirmOpen} onConfirm={() => deleteUser(state.payload)} onCancel={closeModal}/>
+                {isDeleted && (
+                    <p>Suppression effectuée avec succès !</p>
+                )}
+                <h1>Tous les utilisateurs</h1>
                 <div>
                     <table>
                         <thead>
@@ -42,13 +82,18 @@ const Users = () => {
                                         <td>{user.first_name}</td>
                                         <td>{user.last_name}</td>
                                         <td><NavLink to={`/users/edit/${user.id}`}><button>Modifier</button></NavLink></td>
+                                        <td><button onClick = {() => {openModal(user.id)}}>Supprimer l'utilisateur</button></td>
                                     </tr>
                                 )
                             })}
                         </tbody>
                     </table>    
                 </div>
-        </div>        
+            </div>
+            ) : (
+                <h1>Aucun utilisateur inscrit</h1>
+            )}
+        </Fragment>
     )
 }
 

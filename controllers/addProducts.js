@@ -8,7 +8,7 @@ export default async (req, res) => {
         await asyncQuery(sqlModifyResume)
         const paramsSQL = [title, author, publisher, status, price, resume, categories_id, files]
         const createProduct = await asyncQuery (sql, paramsSQL)
-        return {response: createProduct}    
+        return res.json({response: createProduct})    
     } catch (err) {
         console.log (err)
         return

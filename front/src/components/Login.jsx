@@ -1,16 +1,17 @@
-import { useState, useContext, Fragment } from "react"
+import {useState, useContext, Fragment} from "react"
 import axios from "axios"
-import { BASE_URL } from "../tools/constante.js"
-import { lengthLimit, checkEmpty } from "../tools/checkInputsLogin.js"
-import { StoreContext } from "../tools/context.js"
-import { Navigate, NavLink } from "react-router-dom"
+import {BASE_URL} from "../tools/constante.js"
+import {lengthLimit, checkEmpty} from "../tools/checkInputsLogin.js"
+import {StoreContext} from "../tools/context.js"
+import {Navigate, NavLink, useNavigate} from "react-router-dom"
 
 
 const Login = () => {
-    const initialState = {email:"", password:""}
-    const [state, dispatch] = useContext(StoreContext)
-    const [info, setInfo] = useState(initialState)
-    const [errorMess, setErrorMess] = useState("")
+    const initialState = {email:"", password:""};
+    const [state, dispatch] = useContext(StoreContext);
+    const [info, setInfo] = useState(initialState);
+    const [errorMess, setErrorMess] = useState("");
+    const navigate = useNavigate();
     
     const handleChange = (e) => {
         setErrorMess ("")
@@ -26,7 +27,7 @@ const Login = () => {
     const submit = (e) => {
         e.preventDefault()
         if (!checkEmpty(info)) {
-            alert ("Le champ ne peut pas être vide")
+            alert ("Vous devez remplir tous les champs")
             return
         }
         
@@ -39,13 +40,16 @@ const Login = () => {
                 localStorage.setItem("jwtToken", res.data.response.token);
                 axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.response.token;
                 setInfo(initialState);
-                alert ("Vous êtes connecté(e) !")
+                navigate('/');
             }
         })
         .catch(err => {
             console.log(err)
             if (err.response.status === 401) {
                 setErrorMess("E-mail ou mot de passe incorrect");
+                setTimeout(() => {
+                    setErrorMess("");
+                }, 5000);
             }
         })
     }

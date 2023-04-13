@@ -1,4 +1,4 @@
-import {Fragment, useState} from 'react'
+import {Fragment, useState, useEffect} from 'react'
 import {BASE_URL} from "../tools/constante.js"
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
@@ -9,6 +9,16 @@ const UploadFile = () => {
     
     const {id} = useParams()
     const [successMessage, setSuccessMessage] = useState(null)
+    
+    useEffect(() => {
+        let timeout;
+        if (successMessage) {
+            timeout = setTimeout(() => {
+                setSuccessMessage(false);
+            }, 5000);
+        }
+        return () => clearTimeout(timeout);
+    }, [successMessage, setSuccessMessage]);
     
     const submit = (e) => {
         e.preventDefault()

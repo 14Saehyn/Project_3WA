@@ -18,6 +18,16 @@ const Reviews = () => {
         }
     },[reviewsList])
     
+    useEffect(() => {
+        let timeout;
+        if (isDeleted) {
+            timeout = setTimeout(() => {
+                setIsDeleted(false);
+            }, 5000);
+        }
+        return () => clearTimeout(timeout);
+    }, [isDeleted, setIsDeleted]);
+    
     const deleteReview = (id) => {
         axios.post(`${BASE_URL}/deleteReviewsById`, {id})
         .then(res => {
@@ -53,7 +63,7 @@ const Reviews = () => {
                                 <th>Produit</th>
                                 <th>Titre</th>
                                 <th>Contenu</th>
-                                
+                                <th>Statut</th>
                             </tr>
                         </thead>
                         <tbody>

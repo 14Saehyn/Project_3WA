@@ -19,15 +19,21 @@ const ProductDetails = () => {
     }, [id]);
     
     const addToCart = (product) => {
-        dispatch({
-            type: "ADD_CART",
-            payload: product
-        });
-        axios.post(`${BASE_URL}/addToCart`, {
-            cart_id: state.user.cart_id,
-            products_id: product.id
-        })
-        .catch(e => console.log(e))
+        const isInCart = [...state.cart].filter(e => e.id === product.id).length > 0
+        if(isInCart) {
+            alert("Ce produit est déjà dans votre panier !")
+        } else {
+            dispatch({
+                type: "ADD_CART",
+                payload: product
+            });
+            axios.post(`${BASE_URL}/addToCart`, {
+                cart_id: state.user.cart_id,
+                products_id: product.id
+            })
+            .then(() => alert("Le produit a été ajouté au panier"))
+            .catch(e => console.log(e))
+        }
     };
     
     return(

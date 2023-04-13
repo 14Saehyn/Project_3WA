@@ -1,3 +1,26 @@
+/************ FONTS ************/
+@font-face {
+  font-family: 'Akira Expanded';
+  src: url('fonts/akira-expanded.otf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Advent Pro';
+  src: url('fonts/advent_pro.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+
+/************ GENERAL ************/
+html {
+  font-size: 62.5%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +28,581 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #0a0a0a;
+  font-size: 1.6rem;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.title_h2 {
+  color: #ea6718;
+  font-family: 'Akira Expanded', sans-serif;
+  font-size: 25px;
+}
+
+/* Style général pour l'input */
+input {
+  font-size: 16px;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 50%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  font-family: 'Advent Pro', sans-serif;
+}
+
+/* Style de l'input lorsqu'il est en focus (c'est-à-dire lorsqu'on clique dessus pour écrire) */
+input:focus {
+  outline: none;
+  border: 1px solid #ea6718;
+  background-color: #ea6718;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+  color: #fff;
+}
+
+.success-message {
+  font-family: 'Advent Pro', sans-serif;
+  color: #fff;
+  width: 14.1%;
+  background-color: green; /* Couleur de fond semi-transparente */
+  padding: 10px 20px; /* Espacements en haut/bas et à gauche/droite */
+  border-radius: 4em;
+  font-size: 15px;
+  display: inline-block;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.text-input {
+  font-weight: bold;
+  font-size: 20px;
+  color: #ea6718;
+}
+
+
+/************ CONFIRMATION MODAL ************/
+.confirmation-modal {
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.confirmation-modal-content {
+  background: white;
+  border-radius: 4px;
+  padding: 20px;
+  width: 150px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.confirmation-modal-content p {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+.confirmation-modal-content button {
+  background-color: #333333;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition-duration: 0.4s;
+}
+
+.confirmation-modal-content button:hover {
+  background-color: #ea6718;
+}
+
+.confirmation-modal-content .button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+/************ MENU BURGER & TITLE ************/
+.nav-all {
+  position: relative;
+  z-index: 1000;
+}
+
+header {
+  position: relative;
+}
+
+.burger-menu {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  font-size: 36px;
+  cursor: pointer;
+}
+
+.nav-menu {
+  list-style: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(51, 51, 51, 1);
+  flex-direction: column;
+  padding: 20px;
+  transition: transform 0.3s;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transform: translateX(-100%);
+}
+
+.nav-menu.open {
+  transform: translateX(0);
+}
+
+.nav-menu ul {
+  list-style: none;
+  padding: 0;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 auto;
+}
+
+.close-menu {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  color: #ea6718;
+  font-size: 24px;
+}
+
+.nav-menu li {
+  margin: 10px 0;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+
+.nav-menu a {
+  text-decoration: none;
+  color: #ea6718;
+  display: block;
+  padding: 10px 10px; /* Ajoutez 20px de padding horizontal */
+  border: 1px solid transparent;
+  position: relative;
+  font-size: 17px;
+  font-family: 'Akira Expanded', sans-serif;
+}
+
+.nav-menu a:hover {
+  background-color: rgba(255, 255, 255, 1);
+  border-color: white;
+  border-radius: 4px;
+}
+
+.nav-menu-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+hr {
+  border: 1px solid rgba(234, 103, 24, 1);
+  margin: 10px 15px;
+  width: 50%;
+}
+
+
+/************ HOME ************/
+/* Ajoutez ce style pour le conteneur */
+.home-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: url('../public/img/home/fureneshi-home.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+}
+
+/* Mettez à jour le style pour le titre "Home" */
+.home-title {
+  color: #fff;
+  font-size: 50px;
+  font-family: 'Akira Expanded', sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+.content-wrapper {
+  margin-top: 100vh; /* décale le contenu en dessous de l'image */
+}
+
+.home-title_h2 {
+  font-family: 'Advent Pro', sans-serif;
+  color: #fff;
+  background-color: #0a0a0a; /* Couleur de fond semi-transparente */
+  padding: 10px 20px; /* Espacements en haut/bas et à gauche/droite */
+  border-radius: 4em;
+  font-size: 15px;
+}
+
+.about-title {
+  color: #ea6718;
+  font-family: 'Akira Expanded', sans-serif;
+  text-align: center;
+  font-size: 25px;
+}
+
+.about-text-container {
+  margin-top: 3em;
+  color: #fff;
+  font-family: 'Advent Pro', sans-serif;
+  font-size: 15px;
+}
+
+.about-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-image {
+  width: 60%;
+  border: 1px solid #ea6718; /* Ajoute une bordure de 2px et de couleur #ea6718 */
+}
+
+.about-content {
+  margin-top: 2em;
+}
+
+.about-section {
+  padding-bottom: 3em;
+}
+
+.about-button {
+  background-color: white;
+  border: none;
+  color: #ea6718;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  margin-top: 1em;
+  font-family: 'Advent Pro', sans-serif;
+  font-weight: bold;
+}
+
+.about-button:hover {
+  background-color: #ea6718;
+  color: #fff;
+}
+
+/************ FOOTER ************/
+.footer-button-container {
+  display: flex;
+  justify-content: center;
+  background-color: #ea6718;
+  padding: 3em;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.text-footer-button {
+  font-family: 'Akira Expanded', sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.footer-button {
+  background-color: #fff;
+  border: none;
+  color: #ea6718;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-family: 'Advent Pro', sans-serif;
+  font-weight: bold;
+}
+
+.footer-button:hover {
+  background-color: #0a0a0a;
+  color: #fff;
+}
+
+.legal-notice-container {
+  display: flex;
+  justify-content: center;
+}
+
+.legal-notice-link {
+  color: #fff;
+  font-family: 'Advent Pro', sans-serif;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.legal-notice-link:hover {
+  color: #ea6718;
+} 
+
+.legal-notice-text {
+  color: #fff;
+  font-family: 'Advent Pro', sans-serif;
+}
+
+/************ HEADER ************/
+.header-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 9vh;
+  background-image: url('../public/img/header/header.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+}
+
+.header-title {
+  color: #fff;
+  font-size: 45px;
+  font-family: 'Akira Expanded', sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+.content-wrapper_header {
+  margin-top: 8vh; /* décale le contenu en dessous de l'image */
+  text-align: center;
+  position: relative;
+}
+
+/************ USER PROFILE ************/
+.avatar {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ea6718;
+}
+
+.file-chosen {
+  color: #fff;
+}
+
+.user-infos-container {
+  margin: 3em 0;
+}
+
+.user-buttons-container {
+  margin: 0 0 2em 0;
+  text-align: center;
+}
+
+.profile-button {
+  background-color: white;
+  border: none;
+  color: #ea6718;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  margin-top: 1em;
+  font-family: 'Advent Pro', sans-serif;
+  font-weight: bold;
+  margin: 0 1em;
+}
+
+.profile-button:hover {
+  color: #fff;
+}
+
+.profile-message {
+  display: inline-block;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.review:hover {
+  background-color: brown;
+}
+
+.logout:hover {
+  background-color: grey;
+}
+
+.delete:hover {
+  background-color: red;
+}
+
+/************ MEDIA QUERIES ************/
+@media screen and (max-width: 768px) {
+  .home-title {
+    font-size: 35px;
+  }
+  
+  .home-title_h2 {
+    font-size: 13px;
+  }
+  
+  .about-title {
+    font-size: 23px;
+  }
+
+  .about-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1em;
+  }
+  
+  .text-footer-button {
+    font-size: 14px;
+  }
+  
+  .header-title {
+    font-size: 25px;
+  }
+  
+  .user-buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-button {
+    margin: 10px 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .about-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .about-title {
+    font-size: 30px;
+  }
+  
+  .about-image {
+    width: 80%;
+  }
+
+  .about-image-container {
+    width: 50%;
+  }
+
+  .about-text-container {
+    width: 50%;
+    margin-top: 0;
+    padding-right: 2em;
+  }
+  
+  .about-content {
+    margin-top: 3em;
+  }
+  
+  .about-button {
+    margin-top: 0;
+  }
+  
+}
+
+@media screen and (min-width: 1280px) {
+  .home-title_h2 {
+    font-size: 25px;
+  }
+  
+  .about-image {
+    width: 60%;
+  }
+  
+  .about-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .about-image-container, .about-text-container {
+    width: 50%;
+  }
+  
+  .about-text-container {
+    padding-right: 4em;
+  }
+  
+  .about-content {
+    margin-top: 4em;
+  }
+  
+  .about-button {
+    margin-top: 2em;
+  }
 }

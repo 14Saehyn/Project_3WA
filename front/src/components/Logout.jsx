@@ -1,20 +1,20 @@
 import {useEffect, useContext} from 'react' 
 import axios from "axios"
 import {StoreContext} from "../tools/context.js"
+import {useNavigate} from 'react-router-dom'
 
 const Logout = () => {
-    const [state, dispatch] = useContext(StoreContext)
+    const [, dispatch] = useContext(StoreContext)
+    const navigate = useNavigate()
 
-    
-     useEffect(() => {
+    useEffect(() => {
         dispatch({type: 'LOGOUT'})
         localStorage.removeItem('jwtToken')
         delete axios.defaults.headers.common['Authorization']
-    },[])
+        navigate('/')
+    }, [navigate, dispatch])
     
-    return(
-        <div>Vous avez bien été déconnecté(e), à très bientôt !</div> 
-    )   
+    return null
 }
 
 export default Logout

@@ -6,7 +6,7 @@ export default async (req, res) => {
     try {
         const paramsSQL = [first_name, last_name, email, content, new Date()]
         const createContact = await asyncQuery (sql, paramsSQL)
-        return {response: createContact}
+        return res.json({response: createContact})
     } catch (err) {
         console.log (err)
         return

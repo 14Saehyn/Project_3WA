@@ -1,6 +1,7 @@
 import axios from "axios"
 import {BASE_URL} from '../tools/constante.js'
 import {useEffect, useState, Fragment} from "react"
+import {NavLink} from "react-router-dom"
 
 const Josei = () => {
     const [joseiList, setJoseiList] = useState([])
@@ -18,15 +19,15 @@ const Josei = () => {
             <h1>Notre collection "Josei"</h1>
             {joseiList.map((josei, i) => {
                 return(
-                    <ul key={i}>
-                        <a href={`/collections/josei/details/${josei.id}`}>
+                    <div key={i}>
+                        <NavLink to={`/collections/josei/details/${josei.id}`}>
                         <img src={`${BASE_URL}/img/product/${josei.picture}`} alt={`Première de couverture de ${josei.title}`} width="175" height="263" border= "1px solid black"/>
-                        </a>
-                        <a href={`/collections/josei/details/${josei.id}`}>
+                        </NavLink>
+                        <NavLink href={`/collections/josei/details/${josei.id}`}>
                         <p>{josei.title}</p>
-                        </a>
+                        </NavLink>
                         <p>Prix : {josei.price} €</p>
-                    </ul>
+                    </div>
                 )
             })}
         </Fragment>
