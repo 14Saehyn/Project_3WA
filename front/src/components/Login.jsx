@@ -59,21 +59,27 @@ const Login = () => {
             {state.isLogged ?
             (<Navigate to="/" replace={true} />)
             :
-                <div>
-                    <h1>Se connecter</h1>
-                    <form onSubmit={submit}>
-                        <input type="text" name="email" value={info.email} onChange={handleChange} placeholder="Votre e-mail" />
-                        <input type="password" name="password" value={info.password} onChange={handleChange} placeholder="Votre mot de passe" />
-                        <input type="submit" />
-                    </form>
-                    {errorMess.length > 0 && <p>{errorMess}</p>}
-                    <div>
-                        <p>Pas encore inscrit ?</p>
-                        <NavLink to="/signup">
-                            S'inscrire
-                        </NavLink>
+                <Fragment>
+                    <div className="header-container">
+                        <h1 className="header-title">Se connecter</h1>
                     </div>
-                </div>
+                    <Fragment>
+                        <div className="content-wrapper_header">
+                            <form onSubmit={submit}>
+                                <input type="email" name="email" value={info.email} onChange={handleChange} placeholder="Votre e-mail" />
+                                <input type="password" name="password" value={info.password} onChange={handleChange} placeholder="Votre mot de passe" />
+                                <input type="submit" value="Se connecter" className="text-input text-input_login" />
+                            </form>
+                            {errorMess.length > 0 && <p>{errorMess}</p>}
+                            <div className="user-buttons-container">
+                                <p className="signup_text">Pas encore inscrit ?</p>
+                                <NavLink to="/signup">
+                                    <button className="profile-button edit">S'inscrire</button>
+                                </NavLink>
+                            </div>
+                        </div>
+                    </Fragment>
+                </Fragment>
             }
         </Fragment>
     )

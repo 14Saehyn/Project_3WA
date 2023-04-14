@@ -10,12 +10,7 @@ const Footer = () => {
         </NavLink>
       </div>
       <div className="legal-notice-container">
-        <p className="legal-notice-text">2023 © Fureneshi -&nbsp;</p>
-        <p>
-          <NavLink to="/legalnotice" className="legal-notice-link">
-            Mentions Légales
-          </NavLink>
-        </p>
+        <p className="legal-notice-text">2023 - Fureneshi</p>
       </div>
     </div>
   );

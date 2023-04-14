@@ -1,9 +1,16 @@
+import {Fragment} from "react"
+
 const BookingConfirm = () => {
     return (
-        <div>
-            <h1>Merci de votre réservation !</h1>
-            <p>Votre réservation a été enregitrée. Vous avez un délai d'1 mois, atteint la date limite vous serez obligé(e) de faire une nouvelle réservation.</p>
-        </div>
+        <Fragment>
+            <div className="header-container">
+                <h1 className="header-title">Merci !</h1>
+            </div>
+            <div className="content-wrapper_header booking-confirm">
+            <p>Votre réservation a bien été enregitrée.</p>
+            <p>Vous avez un délai d'un mois pour payer et récupérer votre produit, atteint la limite vous serez obligé(e) de faire une nouvelle réservation.</p>
+            </div>
+        </Fragment>
     )
 }
 

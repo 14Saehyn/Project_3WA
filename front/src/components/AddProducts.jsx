@@ -37,12 +37,12 @@ const AddProducts = () => {
          !addProduct.status ||
          !addProduct.price ||
          !addProduct.resume ||
-         !e.target.picture.files[0]) {
+         !e.target.cover.files[0]) {
             alert('Veuillez remplir tous les champs.')
             return
         }
         const dataFile = new FormData()
-        const files = {...e.target.picture.files}
+        const files = {...e.target.cover.files}
         
         /// D'autres input
         dataFile.append("title", addProduct.title)
@@ -67,46 +67,56 @@ const AddProducts = () => {
     
     return(
         <Fragment>
-            {isProductAdded && <p>Le produit a été créé avec succès !</p>}
-            <form onSubmit={submit} encType="multipart/form-data">
-                <input type="text" placeholder="Titre du produit" name="title" onChange={handleChange} value={addProduct.titre} />
-                <select name="categories_id" onChange={handleChange} value={addProduct.categories_id}>
-                    <option value="">Choisir un genre</option>
-                    <option value="1">Aucun</option>
-                    <option value="2">Shonen</option>
-                    <option value="3">Josei</option>
-                    <option value="4">Seinen</option>
-                    <option value="5">Favoris</option>
-                </select>
-                <input type="text" placeholder="Auteur" name="author" onChange={handleChange} value={addProduct.author} />
-                <select name="publisher" onChange={handleChange} value={addProduct.publisher}>
-                    <option value="">Choisir un éditeur</option>
-                    <option>Panini</option>
-                    <option>Mangetsu</option>
-                    <option>Soleil</option>
-                    <option>Glénat</option>
-                    <option>Ki-oon</option>
-                    <option>Ankama</option>
-                    <option>Pika</option>
-                    <option>Kazé (Crunchyroll)</option>
-                    <option>Kana</option>
-                    <option>Kurokawa</option>
-                    <option>Delcourt / Tonkam</option>
-                    <option>Soleil</option>
-                </select>
-                <select name="status" onChange={handleChange} value={addProduct.status}>
-                    <option value="">Choisir un statut</option>
-                    <option>En stock</option>
-                    <option>En rupture de stock</option>
-                </select>
-                <input type="number" placeholder="Prix du produit" name="price" onChange={handleChange} value={addProduct.price} />
-                <textarea placeholder="Résumé du produit" name="resume" onChange={handleChange} value={addProduct.resume} />
-                <p>Ajouter une image</p>
-                <label name="picture">
-                    <input type="file" name="picture"/>
-                </label>
-                <input type="submit" />
-            </form>
+            <div className="header-container">
+                <h1 className="header-title">Panel admin</h1>
+            </div>
+            <div className="content-wrapper_header">
+                {isProductAdded &&
+                    <p className="success-message profile-message">Le produit a été créé avec succès !</p>
+                }
+                <form onSubmit={submit} encType="multipart/form-data">
+                    <h2 className="title_h2">Ajouter les informations</h2>
+                    <input type="text" placeholder="Titre" name="title" onChange={handleChange} value={addProduct.titre} />
+                    <input type="text" placeholder="Auteur" name="author" onChange={handleChange} value={addProduct.author} />
+                    <input type="number" placeholder="Prix" name="price" onChange={handleChange} value={addProduct.price} />
+                    <textarea placeholder="Résumé" name="resume" onChange={handleChange} value={addProduct.resume} />
+                    <div className="select-space">
+                        <select name="categories_id" onChange={handleChange} value={addProduct.categories_id}>
+                            <option value="">Choisir un genre</option>
+                            <option value="1">Aucun</option>
+                            <option value="2">Shonen</option>
+                            <option value="3">Josei</option>
+                            <option value="4">Seinen</option>
+                            <option value="5">Favoris</option>
+                        </select>
+                        <select name="publisher" onChange={handleChange} value={addProduct.publisher}>
+                            <option value="">Choisir un éditeur</option>
+                            <option>Panini</option>
+                            <option>Mangetsu</option>
+                            <option>Soleil</option>
+                            <option>Glénat</option>
+                            <option>Ki-oon</option>
+                            <option>Ankama</option>
+                            <option>Pika</option>
+                            <option>Kazé (Crunchyroll)</option>
+                            <option>Kana</option>
+                            <option>Kurokawa</option>
+                            <option>Delcourt / Tonkam</option>
+                            <option>Soleil</option>
+                        </select>
+                        <select name="status" onChange={handleChange} value={addProduct.status}>
+                            <option value="">Choisir un statut</option>
+                            <option>En stock</option>
+                            <option>En rupture de stock</option>
+                        </select>
+                    </div>
+                    <div className="user-infos-container">
+                        <h2 className="title_h2">Ajouter une couverture</h2>
+                        <input className="file-chosen" type='file' name='cover'/>
+                        <input type='submit' value='Modifier' className="text-input"/>
+                    </div>
+                </form>
+            </div>
         </Fragment>
     )
 }

@@ -38,28 +38,41 @@ const ProductDetails = () => {
     
     return(
         <Fragment>
-            {productDetails.map((product, i) => {
-                return(
-                <Fragment key={i}>
-                    <h1>{product.title}</h1>
-                    <ul>
-                        <img src={`${BASE_URL}/img/product/${product.picture}`} alt={`Première de couverture de ${product.title}`} width="175" height="263" border= "1px solid black"/>
-                        <li>Auteur : {product.author}</li>
-                        <li>Éditeur : {product.publisher}</li>
-                        <li>Statut : {product.status}</li>
-                        <li>Prix : {product.price} €</li>
-                        <li>Résumé : {product.resume}</li>
+            <div className="header-container">
+                <h1 className="header-title">Informations</h1>
+            </div>
+            <div className="product_container">
+                {productDetails.map((product, i) => {
+                    return(
+                    <Fragment key={i}>
+                        <h2 className="title_h2">{product.title}</h2>
+                        <div className="product_details_container">
+                            <div className="product_couv">
+                                <img src={`${BASE_URL}/img/product/${product.picture}`} alt={`Première de couverture de ${product.title}`} className="product_couv_img"/>
+                            </div>
+                            <div className="product_details">
+                                <ul className="product_details_list">
+                                    <li className="product_content">Auteur : {product.author}</li>
+                                    <li className="product_content">Éditeur : {product.publisher}</li>
+                                    <li className="product_content">Statut : {product.status}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="resume_container">
+                            <p className="product_content">{product.resume}</p>
+                            <p className="product_content product_details_price">{product.price} €</p>
+                        </div>
                         {product.status === "Rupture de stock" ? (
-                            <p>Ce produit est en rupture de stock.</p>
+                            <p className="product_out_stock">Ce produit est en rupture de stock</p>
                         ) : (
-                            <button onClick={() => addToCart(product)}>Ajouter au panier</button>
+                            <button onClick={() => addToCart(product)} className="profile-button edit">Ajouter au panier</button>
                         )}
-                    </ul>
-                    <NavLink to={`/details/addreviews/${product.id}`}><button>Donner un avis</button></NavLink>
-                    <NavLink to={`/details/reviews/${product.id}`}><button>{`Voir les avis de ${product.title}`}</button></NavLink>
-                </Fragment>
-                )
-            })}
+                        <NavLink to={`/details/addreviews/${product.id}`}><button className="profile-button review">Donner un avis</button></NavLink>
+                        <NavLink to={`/details/reviews/${product.id}`}><button className="profile-button logout">{`Tous les avis`}</button></NavLink>
+                    </Fragment>
+                    )
+                })}
+            </div>
         </Fragment>
         
     )

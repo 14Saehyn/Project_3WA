@@ -16,20 +16,24 @@ const Shonen = () => {
 
     return(
         <Fragment>
-            <h1>Notre collection "Shonen"</h1>
-            {shonenList.map((shonen, i) => {
-                return(
-                    <div key={i}>
-                        <NavLink to={`/collections/shonen/details/${shonen.id}`}>
-                        <img src={`${BASE_URL}/img/product/${shonen.picture}`} alt={`Première de couverture de ${shonen.title}`} width="175" height="263" border= "1px solid black"/>
-                        </NavLink>
-                        <NavLink to={`/collections/shonen/details/${shonen.id}`}>
-                        <p>{shonen.title}</p>
-                        </NavLink>
-                        <p>Prix : {shonen.price} €</p>
-                    </div>
-                )
-            })}
+            <div className="header-container">
+                <h1 className="header-title">Shonen</h1>
+            </div>
+            <div className="products_container">
+                {shonenList.map((shonen, i) => {
+                    return(
+                        <div key={i} className="product_item">
+                            <NavLink to={`/collections/shonen/details/${shonen.id}`} className="product_link">
+                            <img src={`${BASE_URL}/img/product/${shonen.picture}`} alt={`Première de couverture de ${shonen.title}`} className="product_img"/>
+                            </NavLink>
+                            <NavLink to={`/collections/shonen/details/${shonen.id}`} className="product_link">
+                            <p className="product_title">{shonen.title}</p>
+                            </NavLink>
+                            <p className="product_price">{shonen.price} €</p>
+                        </div>
+                    )
+                })}
+            </div>
         </Fragment>
     )
 }

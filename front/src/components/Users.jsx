@@ -51,48 +51,54 @@ const Users = () => {
 
     return(
         <Fragment>
-        {usersList.length > 0 ? (
-            <div>
-                <ConfirmationModal isOpen={state.confirmOpen} onConfirm={() => deleteUser(state.payload)} onCancel={closeModal}/>
-                {isDeleted && (
-                    <p>Suppression effectuée avec succès !</p>
-                )}
-                <h1>Tous les utilisateurs</h1>
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Avatar</th>
-                                <th>Date d'inscription</th>
-                                <th>Rôle</th>
-                                <th>Prénom</th>
-                                <th>Nom</th>
-                                <th>Éditer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {usersList.map((user, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>{user.id}</td>
-                                        <td><img src={`${BASE_URL}/img/user/${user.avatar}`} alt={`Avatar de ${user.first_name} ${user.last_name}`} width="100" height="100" border= "1px solid black"/></td>
-                                        <td>{formatDate(user.registration_date)}</td>
-                                        <td>{user.name}</td>
-                                        <td>{user.first_name}</td>
-                                        <td>{user.last_name}</td>
-                                        <td><NavLink to={`/users/edit/${user.id}`}><button>Modifier</button></NavLink></td>
-                                        <td><button onClick = {() => {openModal(user.id)}}>Supprimer l'utilisateur</button></td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>    
-                </div>
+            <div className="header-container">
+                <h1 className="header-title">Panel admin</h1>
             </div>
-            ) : (
-                <h1>Aucun utilisateur inscrit</h1>
-            )}
+            <div className="content-wrapper_header content-wrapper_reviews_contact">
+                {usersList.length > 0 ? (
+                    <div>
+                        <ConfirmationModal isOpen={state.confirmOpen} onConfirm={() => deleteUser(state.payload)} onCancel={closeModal}/>
+                        {isDeleted && (
+                            <p className="delete-message profile-message">Suppression effectuée avec succès !</p>
+                        )}
+                        <h2 className="title_h2">Tous les utilisateurs</h2>
+                        <div>
+                            <table className="table">
+                                <thead className="table_head">
+                                    <tr className="table_row">
+                                        <th className="table_header">ID</th>
+                                        <th className="table_header">Avatar</th>
+                                        <th className="table_header">Date d'inscription</th>
+                                        <th className="table_header">Rôle</th>
+                                        <th className="table_header">Prénom</th>
+                                        <th className="table_header">Nom</th>
+                                        <th className="table_header">Éditer</th>
+                                        <th className="table_header">Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="table_body">
+                                    {usersList.map((user, i) => {
+                                        return (
+                                            <tr key={i} className="table_row">
+                                                <td className="table_data">{user.id}</td>
+                                                <td className="table_data"><img src={`${BASE_URL}/img/user/${user.avatar}`} alt={`Avatar de ${user.first_name} ${user.last_name}`} width="100" height="100" border= "1px solid black" className="table_avatar"/></td>
+                                                <td className="table_data">{formatDate(user.registration_date)}</td>
+                                                <td className="table_data">{user.name}</td>
+                                                <td className="table_data">{user.first_name}</td>
+                                                <td className="table_data">{user.last_name}</td>
+                                                <td className="table_data"><NavLink to={`/users/edit/${user.id}`}><button className="profile-button edit">Modifier</button></NavLink></td>
+                                                <td className="table_data"><button className="profile-button delete" onClick = {() => {openModal(user.id)}}>Supprimer</button></td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>    
+                        </div>
+                    </div>
+                ) : (
+                    <h1>Aucun utilisateur inscrit</h1>
+                )}
+            </div>
         </Fragment>
     )
 }

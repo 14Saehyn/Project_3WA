@@ -50,26 +50,36 @@ const Cart = () => {
     
     return(
         <Fragment>
+            <div className="header-container">
+                <h1 className="header-title">Panier</h1>
+            </div>
             {state.cart.length > 0 ? (
-                <Fragment>
-                    <h1>Votre panier</h1>
+                <div className="cart-container">
                     {state.cart.map((product, i) => {
                         return(
-                            <div key={i}>
-                                <img src={`${BASE_URL}/img/product/${product.picture}`} alt={`Première de couverture de ${product.title}`} width="95" height="139" border= "1px solid black"/>
-                                <p>{product.title}</p>
-                                <p>{product.price} €</p>
-                                <button onClick={() => removeCartProduct(product)}>Retirer du panier</button>
+                            <div key={i} className="cart-item">
+                                <img src={`${BASE_URL}/img/product/${product.picture}`} alt={`Première de couverture de ${product.title}`} />
+                                <div className="cart-item-details">
+                                    <p className="cart_title">{product.title}</p>
+                                    <p className="cart_price">{product.price} €</p>
+                                </div>
+                                <div className="cart-item-actions">
+                                    <button onClick={() => removeCartProduct(product)} className="profile-button delete">Retirer du panier</button>
+                                </div>
                            </div>
                         )
                     })}
-                    <p>Total : {total} €</p>
-                    <NavLink to="/cart/confirmation"><button onClick={removeCart}>Réserver</button></NavLink>
-                </Fragment>
+                    <p className="total">Total : {total} €</p>
+                    <div className="cart-buttons">
+                        <NavLink to="/cart/confirmation"><button className="profile-button edit" onClick={removeCart}>Réserver</button></NavLink>
+                    </div>
+                </div>
             ) : (
-                <h1>Votre panier est vide !</h1>
+                <div className="cart-container">
+                    <h2 className="title_h2">Ton panier est vide...</h2>
+                </div>
             )}
         </Fragment>
-        )
+    )
 }
 export default Cart;

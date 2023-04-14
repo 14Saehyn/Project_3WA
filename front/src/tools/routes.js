@@ -20,7 +20,6 @@ import Logout from "../components/Logout.jsx";
 import Bio from "../components/Bio.jsx";
 import Contact from "../components/Contact.jsx";
 import Cart from "../components/Cart.jsx";
-import LegalNotice from "../components/LegalNotice.jsx";
 import AddReviews from "../components/AddReviews.jsx";
 import ReviewsProducts from "../components/ReviewsByProducts.jsx";
 import Reviews from "../components/Reviews.jsx";
@@ -58,7 +57,6 @@ const routes = [
     {path:"/contactadmin", component:<ContactAdmin />},
     {path:"/cart", component:<Cart />},
     {path:"/cart/confirmation", component:<BookingConfirm />},
-    {path:"/legalnotice", component:<LegalNotice />},
     {path:"/details/addreviews/:products_id", component:<AddReviews />},
     
     {path:"*", component:<Error404 />}

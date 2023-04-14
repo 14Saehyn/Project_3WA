@@ -68,31 +68,38 @@ const Contact = () => {
 
     return(
         <Fragment>
-            <div>
-                {successMessage && !errors.first_name && !errors.last_name && !errors.email && !errors.content && !submitting && (
-                    <p>{successMessage}</p>
-                )}
-                <form onSubmit={submit}>
-                    <h1>Envoyez-nous un message !</h1>
-                    <input type='text' placeholder='Votre prénom' name='first_name' onChange={handleChange} value={contact.first_name} />
-                    {errors.first_name && (
-                        <span>{errors.first_name}</span>
-                    )}
-                    <input type='text' placeholder='Votre nom' name='last_name' onChange={handleChange} value={contact.last_name} />
-                    {errors.last_name && (
-                        <span>{errors.last_name}</span>
-                    )}
-                    <input type='email' placeholder='Votre email' name='email' onChange={handleChange} value={contact.email} />
-                    {errors.email && (
-                        <span>{errors.email}</span>
-                    )}
-                    <textarea placeholder="Qu'est-ce que tu veux ?" name="content" onChange={handleChange} value={contact.content} />
-                    {errors.content && (
-                        <span>{errors.content}</span>
-                    )}
-                    <input type='submit' />
-                </form>
+            <div className="header-container">
+                <h1 className="header-title">Contact</h1>
             </div>
+            <Fragment>
+                <div className="content-wrapper_header">
+                    {successMessage && !errors.first_name && !errors.last_name && !errors.email && !errors.content && !submitting && (
+                        <p className="success-message profile-message">{successMessage}</p>
+                    )}
+                    <form onSubmit={submit}>
+                        <h2 className="title_h2">Envoyez-nous un message !</h2>
+                        <input type='text' placeholder='Votre prénom' name='first_name' onChange={handleChange} value={contact.first_name} />
+                        {errors.first_name && (
+                            <span className="delete-message profile-message">{errors.first_name}</span>
+                        )}
+                        <input type='text' placeholder='Votre nom' name='last_name' onChange={handleChange} value={contact.last_name} />
+                        {errors.last_name && (
+                            <span className="delete-message profile-message">{errors.last_name}</span>
+                        )}
+                        <input type='email' placeholder='Votre email' name='email' onChange={handleChange} value={contact.email} />
+                        {errors.email && (
+                            <span className="delete-message profile-message">{errors.email}</span>
+                        )}
+                        <textarea placeholder="Votre message" name="content" onChange={handleChange} value={contact.content} />
+                        {errors.content && (
+                            <span className="delete-message profile-message">{errors.content}</span>
+                        )}
+                        <div className="user-buttons-container">
+                            <input type='submit' value="Envoyer" className="text-input"/>
+                        </div>
+                    </form>
+                </div>
+            </Fragment>
         </Fragment>
     )
 }

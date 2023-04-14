@@ -3,7 +3,7 @@ import {useEffect, useState, Fragment, useReducer} from "react";
 import axios from 'axios';
 import {initialState} from "../tools/context.js";
 import {reducer} from "../tools/reducer.js";
-import {useParams, NavLink} from "react-router-dom";
+import {useParams, NavLink, useNavigate} from "react-router-dom";
 import ConfirmationModal from "./ConfirmationModal.jsx";
 import UploadFile from "./UploadFile.jsx";
 
@@ -13,6 +13,7 @@ const UserProfile = () => {
     const {id} = useParams()
     const [successMessage, setSuccessMessage] = useState(null)
     const [isDeleting, setIsDeleting] = useState(false);
+    const navigate = useNavigate();
     
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -57,10 +58,17 @@ const UserProfile = () => {
             setIsDeleting(false);
             dispatch({type: 'confirmModal'});
             alert("Suppression effectuée avec succès !");
+            logoutAndRedirect();
         })
         .catch(err => console.log(err))
     };
-
+    
+    const logoutAndRedirect = () => {
+        dispatch({type: 'LOGOUT'})
+        localStorage.removeItem('jwtToken')
+        delete axios.defaults.headers.common['Authorization']
+        navigate('/login');
+    }
     
     const closeModal = () => {
         dispatch({type: 'closeModal'});

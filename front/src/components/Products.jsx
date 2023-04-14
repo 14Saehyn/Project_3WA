@@ -50,56 +50,61 @@ const Products = () => {
     
     return(
         <Fragment>
-            {productsList.length > 0 ? (
-            <div>
-                <ConfirmationModal isOpen={state.confirmOpen} onConfirm={() => deleteProduct(state.payload)} onCancel={closeModal}/>
-                {isDeleted && (
-                    <p>Suppression effectuée avec succès !</p>
-                )}
-                <h1>Tous les produits</h1>
-                <NavLink to={`/addproducts`}><button>Ajouter un produit</button></NavLink>
-                <div>   
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Couverture</th>
-                                <th>Titre</th>
-                                <th>Catégorie</th>
-                                <th>Auteur</th>
-                                <th>Éditeur</th>
-                                <th>Statut</th>
-                                <th>Prix</th>
-                                <th>Résumé</th>
-                                <th>Éditer</th>
-                                <th>Statut</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {productsList.map((product, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>{product.id}</td>
-                                        <td><img src={`${BASE_URL}/img/product/${product.picture}`} alt={`Première de couverture de ${product.title}`} width="175" height="263" border= "1px solid black"/></td>
-                                        <td>{product.title}</td>
-                                        <td>{product.name}</td>
-                                        <td>{product.author}</td>
-                                        <td>{product.publisher}</td>
-                                        <td>{product.status}</td>
-                                        <td>{product.price} €</td>
-                                        <td>{product.resume}</td>
-                                        <td><NavLink to={`/products/edit/${product.id}`}><button>Modifier</button></NavLink></td>
-                                        <td><button onClick = {() => {openModal(product.id)}}>Supprimer le produit</button></td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+            <div className="header-container">
+                <h1 className="header-title">Panel admin</h1>
             </div>
-            ) : (
-                <h1>Aucun produit n'a été ajouté</h1>
-            )}
+            <div className="content-wrapper_header content-wrapper_reviews_contact">
+                {productsList.length > 0 ? (
+                    <div>
+                        <ConfirmationModal isOpen={state.confirmOpen} onConfirm={() => deleteProduct(state.payload)} onCancel={closeModal}/>
+                        {isDeleted && (
+                            <p className="delete-message profile-message">Suppression effectuée avec succès !</p>
+                        )}
+                        <h2 className="title_h2">Tous les produits</h2>
+                        <NavLink to={`/addproducts`}><button className="profile-button add">Ajouter un produit</button></NavLink>
+                        <div>   
+                            <table className="products_table">
+                                <thead className="products_table_head">
+                                    <tr className="products_table_row">
+                                        <th className="products_table_header">ID</th>
+                                        <th className="products_table_header">Couverture</th>
+                                        <th className="products_table_header">Titre</th>
+                                        <th className="products_table_header">Catégorie</th>
+                                        <th className="products_table_header">Auteur</th>
+                                        <th className="products_table_header">Éditeur</th>
+                                        <th className="products_table_header">Statut</th>
+                                        <th className="products_table_header">Prix</th>
+                                        <th className="products_table_header">Résumé</th>
+                                        <th className="products_table_header">Éditer</th>
+                                        <th className="products_table_header">Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="products_table_body">
+                                    {productsList.map((product, i) => {
+                                        return (
+                                            <tr key={i} className="products_table_row">
+                                                <td className="products_table_data">{product.id}</td>
+                                                <td className="products_table_data"><img src={`${BASE_URL}/img/product/${product.picture}`} alt={`Première de couverture de ${product.title}`} width="175" height="263" border= "1px solid black" className= "products_cover"/></td>
+                                                <td className="products_table_data">{product.title}</td>
+                                                <td className="products_table_data">{product.name}</td>
+                                                <td className="products_table_data">{product.author}</td>
+                                                <td className="products_table_data">{product.publisher}</td>
+                                                <td className="products_table_data">{product.status}</td>
+                                                <td className="products_table_data">{product.price} €</td>
+                                                <td className="products_table_data">{product.resume}</td>
+                                                <td className="products_table_data"><NavLink to={`/products/edit/${product.id}`}><button className="profile-button edit">Modifier</button></NavLink></td>
+                                                <td className="products_table_data"><button className="profile-button delete" onClick = {() => {openModal(product.id)}}>Supprimer</button></td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    ) : (
+                        <h1>Aucun produit n'a été ajouté</h1>
+                )}
+            </div>
         </Fragment>
     )
 }

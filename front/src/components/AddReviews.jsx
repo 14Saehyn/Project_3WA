@@ -64,29 +64,36 @@ const AddReviews = () => {
     
     return (
         <Fragment>
-        {state.isLogged ?
-            (<div>
-                {successMessage && !errors.title && !errors.content && !submitting && (
-                    <p>{successMessage}</p>
-                )}
-                <form onSubmit={submit}>
-                    <h1>Donnez-nous votre avis sur ce manga !</h1>
-                    <input type="text" placeholder="Votre titre" name="title" onChange={handleChange} value={addReview.title} />
-                    {errors.title && (
-                        <span>{errors.title}</span>
-                    )}
-                    <textarea placeholder="Votre jugement (complètement osef d'ailleurs) sur cet ouvrage" name="content" onChange={handleChange} value={addReview.content} />
-                    {errors.content && (
-                        <span>{errors.content}</span>
-                    )}
-                    <input type="submit" />
-                </form>
-            </div>)
-            :
-            (<div>
-            <p>Vous devez être connecté(e) pour pouvoir donner un avis !</p>
-            </div>)
-        }
+            <div className="header-container">
+                <h1 className="header-title">Ton avis</h1>
+            </div>
+            {state.isLogged ? (
+                <Fragment>
+                    <div className="content-wrapper_header">
+                        {successMessage && !errors.title && !errors.content && !submitting && (
+                            <p className="success-message profile-message">{successMessage}</p>
+                        )}
+                        <form onSubmit={submit}>
+                            <h2 className="title_h2">Donne-nous ton avis !</h2>
+                            <input type="text" placeholder="Titre" name="title" onChange={handleChange} value={addReview.title} />
+                            {errors.title && (
+                                <span className="delete-message profile-message">{errors.title}</span>
+                            )}
+                            <textarea placeholder="Avis" name="content" onChange={handleChange} value={addReview.content} />
+                            {errors.content && (
+                                <span className="delete-message profile-message">{errors.content}</span>
+                            )}
+                            <div className="user-buttons-container">
+                                <input type='submit' value="Confirmer" className="text-input"/>
+                            </div>
+                        </form>
+                    </div>
+                </Fragment>
+            ) : (
+                <div className="content-wrapper_header">
+                    <h2 className="title_h2">Il faut que tu sois en ligne pour donner un avis !</h2>
+                </div>
+            )}
         </Fragment>
     )
 }

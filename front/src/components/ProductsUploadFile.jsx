@@ -45,14 +45,12 @@ const UploadFile = () => {
     return (
         <Fragment>
             {successMessage && (
-                <p>{successMessage}</p>
+                <p className="success-message profile-message">{successMessage}</p>
             )}
-            <h1>Modifier l'image</h1>
+            <h2 className="title_h2">Modifier la couverture</h2>
             <form onSubmit={submit} encType="multipart/form-data">
-                <label name="picture">
-                    <input type='file' name='picture'/>
-                </label>
-                <input type='submit' value='Submit'/>
+                <input className="file-chosen" type='file' name='picture'/>
+                <input type='submit' value='Modifier' className="text-input"/>
             </form>
         </Fragment>
     )

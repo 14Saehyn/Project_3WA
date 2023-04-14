@@ -28,6 +28,14 @@ const Reviews = () => {
         return () => clearTimeout(timeout);
     }, [isDeleted, setIsDeleted]);
     
+    const truncateText = (text, maxLength) => {
+        if (text.length > maxLength) {
+            return text.substring(0, maxLength) + '...';
+        } else {
+            return text;
+        }
+    }
+    
     const deleteReview = (id) => {
         axios.post(`${BASE_URL}/deleteReviewsById`, {id})
         .then(res => {
@@ -47,45 +55,50 @@ const Reviews = () => {
 
     return(
         <Fragment>
-            {reviewsList.length > 0 ? (
-            <div>
-                <ConfirmationModal isOpen={state.confirmOpen} onConfirm={() => deleteReview(state.payload)} onCancel={closeModal}/>
-                {isDeleted && (
-                    <p>Suppression effectuée avec succès !</p>
-                )}
-                <h1>Tous les avis</h1>
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Avatar</th>
-                                <th>Publié par : </th>
-                                <th>Produit</th>
-                                <th>Titre</th>
-                                <th>Contenu</th>
-                                <th>Statut</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {reviewsList.map((review, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td><img src={`${BASE_URL}/img/user/${review.avatar}`} alt={`Avatar de ${review.first_name} ${review.last_name}`} width="75" height="75" border= "1px solid black"/></td>
-                                        <td>{review.first_name} {review.last_name}</td>
-                                        <td>{review.products_title}</td>
-                                        <td>{review.title}</td>
-                                        <td>{review.content}</td>
-                                        <td><button onClick = {() => {openModal(review.id)}}>Supprimer l'avis</button></td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>    
-                </div>
+            <div className="header-container">
+                <h1 className="header-title">Panel admin</h1>
             </div>
-            ) : (
-                <h1>Aucun avis pour l'instant</h1>
-            )}
+            <div className="content-wrapper_header content-wrapper_reviews_contact">
+                {reviewsList.length > 0 ? (
+                <Fragment>
+                    <ConfirmationModal isOpen={state.confirmOpen} onConfirm={() => deleteReview(state.payload)} onCancel={closeModal}/>
+                    {isDeleted && (
+                        <p className="delete-message profile-message">Suppression effectuée avec succès !</p>
+                    )}
+                    <h2 className="title_h2">Tous les avis</h2>
+                    <div>
+                        <table className="table">
+                            <thead className="table_head">
+                                <tr className="table_row">
+                                    <th className="table_header">Avatar</th>
+                                    <th className="table_header">Publié par</th>
+                                    <th className="table_header">Produit</th>
+                                    <th className="table_header">Titre</th>
+                                    <th className="table_header">Contenu</th>
+                                    <th className="table_header">Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody className="table_body">
+                                {reviewsList.map((review, i) => {
+                                    return (
+                                        <tr key={i} className="table_row">
+                                            <td className="table_data"><img src={`${BASE_URL}/img/user/${review.avatar}`} alt={`Avatar de ${review.first_name} ${review.last_name}`} className=" table_avatar"/></td>
+                                            <td className="table_data">{review.first_name} {review.last_name}</td>
+                                            <td className="table_data">{review.products_title}</td>
+                                            <td className="table_data">{review.title}</td>
+                                            <td className="table_data">{truncateText(review.content, 25)}</td>
+                                            <td className="table_data"><button className="profile-button delete" onClick = {() => {openModal(review.id)}}>Supprimer</button></td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </Fragment>
+                ) : (
+                    <h2 className="title_h2">Aucun avis pour l'instant...</h2>
+                )}
+            </div>
         </Fragment>
     )
 }

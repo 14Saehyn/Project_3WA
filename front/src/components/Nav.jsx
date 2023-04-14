@@ -67,7 +67,7 @@ const Nav = (props) => {
               <NavAdmin handleLinkClick={handleLinkClick} />
               <li>
                 <NavLink to="/collections" onClick={handleLinkClick}>
-                  Nos collections
+                  Collections
                 </NavLink>
               </li>
               <li>

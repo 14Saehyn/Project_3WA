@@ -16,20 +16,24 @@ const Josei = () => {
     
     return(
         <Fragment>
-            <h1>Notre collection "Josei"</h1>
-            {joseiList.map((josei, i) => {
-                return(
-                    <div key={i}>
-                        <NavLink to={`/collections/josei/details/${josei.id}`}>
-                        <img src={`${BASE_URL}/img/product/${josei.picture}`} alt={`Première de couverture de ${josei.title}`} width="175" height="263" border= "1px solid black"/>
-                        </NavLink>
-                        <NavLink href={`/collections/josei/details/${josei.id}`}>
-                        <p>{josei.title}</p>
-                        </NavLink>
-                        <p>Prix : {josei.price} €</p>
-                    </div>
-                )
-            })}
+            <div className="header-container">
+                <h1 className="header-title">Josei</h1>
+            </div>
+            <div className="products_container">
+                {joseiList.map((josei, i) => {
+                    return(
+                        <div key={i} className="product_item">
+                            <NavLink to={`/collections/josei/details/${josei.id}`} className="product_link">
+                            <img src={`${BASE_URL}/img/product/${josei.picture}`} alt={`Première de couverture de ${josei.title}`} className="product_img"/>
+                            </NavLink>
+                            <NavLink href={`/collections/josei/details/${josei.id}`} className="product_link">
+                            <p className="product_title">{josei.title}</p>
+                            </NavLink>
+                            <p className="product_price">{josei.price} €</p>
+                        </div>
+                    )
+                })}
+            </div>
         </Fragment>
     )
 }

@@ -16,20 +16,24 @@ const Favorite = () => {
     
     return(
         <Fragment>
-            <h1>Notre collection "Favoris"</h1>
-            {favoriteList.map((favorite, i) => {
-                return(
-                    <div key={i}>
-                        <NavLink to={`/collections/favoris/details/${favorite.id}`}>
-                        <img src={`${BASE_URL}/img/product/${favorite.picture}`} alt={`Première de couverture de ${favorite.title}`} width="175" height="263" border= "1px solid black"/>
-                        </NavLink>
-                        <NavLink href={`/collections/favoris/details/${favorite.id}`}>
-                        <p>{favorite.title}</p>
-                        </NavLink>
-                        <p>Prix : {favorite.price} €</p>
-                    </div>
-                )
-            })}
+            <div className="header-container">
+                <h1 className="header-title">Favoris</h1>
+            </div>
+            <div className="products_container">
+                {favoriteList.map((favorite, i) => {
+                    return(
+                        <div key={i} className="product_item">
+                            <NavLink to={`/collections/favoris/details/${favorite.id}`} className="product_link">
+                            <img src={`${BASE_URL}/img/product/${favorite.picture}`} alt={`Première de couverture de ${favorite.title}`} className="product_img"/>
+                            </NavLink>
+                            <NavLink href={`/collections/favoris/details/${favorite.id}`}  className="product_link">
+                            <p className="product_title">{favorite.title}</p>
+                            </NavLink>
+                            <p className="product_price">{favorite.price} €</p>
+                        </div>
+                    )
+                })}
+            </div>
         </Fragment>
     )
 }
